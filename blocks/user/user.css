@@ -1,0 +1,16 @@
+.user {
+  width: 282px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .user {
+    width: 486px;
+    height: 120px;
+    flex-direction: row;
+  }
+}

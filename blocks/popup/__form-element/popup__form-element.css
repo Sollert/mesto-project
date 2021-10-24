@@ -1,0 +1,16 @@
+.popup__form-element {
+  margin: 0;
+  padding: 0 0 9px;
+  width: 238px;
+  height: 27px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2); 
+}
+
+@media (min-width: 768px) {
+  .popup__form-element {
+    width: 358px;
+  }  
+}

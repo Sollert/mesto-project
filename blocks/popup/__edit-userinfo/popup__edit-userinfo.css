@@ -1,0 +1,22 @@
+.popup__edit-userinfo {
+  margin: 0 0 45px;
+  padding: 0;
+  width: 238px;
+  height: 84px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media (min-width: 768px) {
+  .popup__edit-userinfo {
+    width: 358px;
+    margin: 0 0 48px;
+  }
+}

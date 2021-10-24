@@ -1,0 +1,21 @@
+.user__status {
+  margin: 0;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+  .user__status {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: left;
+  }
+}
