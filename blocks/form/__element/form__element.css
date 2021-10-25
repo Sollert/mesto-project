@@ -1,4 +1,4 @@
-.popup__form-element {
+.form__element {
   margin: 0;
   padding: 0 0 9px;
   width: 238px;
@@ -10,7 +10,7 @@
 }
 
 @media (min-width: 768px) {
-  .popup__form-element {
+  .form__element {
     width: 358px;
   }  
 }

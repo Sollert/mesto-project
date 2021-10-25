@@ -1,8 +1,8 @@
-.popup__edit-userinfo {
+.form__fields {
   margin: 0 0 45px;
   padding: 0;
   width: 238px;
-  height: 84px;
+  min-height: 84px;
   border: none;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@
 }
 
 @media (min-width: 768px) {
-  .popup__edit-userinfo {
+  .form__fields {
     width: 358px;
     margin: 0 0 48px;
   }

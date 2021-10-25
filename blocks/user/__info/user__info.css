@@ -1,11 +1,11 @@
 .user__info {
-  margin-left: 30px;
+  margin-left: 26px;
   width: 217px;
-  height: 54px;
+  min-height: 54px;
   display: grid;
   grid-template-columns: 189px 1fr;
   column-gap: 10px;
-  row-gap: 14px;
+  row-gap: 6px;
   align-content: center;
   align-items: center;
 }
@@ -14,9 +14,9 @@
   .user__info {
     margin-left: 0;
     width: 336px;
-    height: 73px;
+    min-height: 73px;
     column-gap: 18px;
-    row-gap: 16px;
+    row-gap: 5px;
     grid-template-columns: 294px 1fr;
   }
 }
