@@ -89,20 +89,20 @@
       &copy;&nbsp;2020 Mesto Russia
     </h2>
   </footer>
-    <div class="popup page__popup">
+    <div class="popup popup_opened page__popup">
       <div class="popup__container">
-      <form class="form" name="edit-profile">
-        <h2 class="form__title">
+        <h2 class="popup__title">
           Редактировать профиль
         </h2>
-        <fieldset class="form__fields">
-          <input type="text" class="form__element" value="Жак-Ив Кусто" name="username" placeholder="Введите имя" required>
-          <input type="text" class="form__element" value="Исследователь океана" name="userstaus" placeholder="Введите статус" required>
-        </fieldset>
-        <button type="submit" class="form__save-button">
-          Сохранить
-        </button>
-      </form>
+        <form class="form" name="edit-profile">
+          <fieldset class="form__fields">
+            <input type="text" class="form__element" value="Жак-Ив Кусто" name="username" placeholder="Введите имя" required>
+            <input type="text" class="form__element" value="Исследователь океана" name="userstaus" placeholder="Введите статус" required>
+          </fieldset>
+          <button type="submit" class="form__save-button">
+            Сохранить
+          </button>
+        </form>
         <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
       </div>
     </div>
