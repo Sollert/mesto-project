@@ -5,7 +5,7 @@ buttonOpenEditProfile.addEventListener('click', function(){
 })
 
 // Закрытие окна редактирования профиля по клику на крестик
-const buttonCloseEditProfile = document.querySelector('.popup__close-button')
+const buttonCloseEditProfile = editProfilePopup.querySelector('.popup__close-button')
 buttonCloseEditProfile.addEventListener('click', function(){
   editProfilePopup.classList.remove('popup_opened')
 })
