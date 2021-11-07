@@ -73,22 +73,22 @@ const initialCards = [
 ];
 
 for(i = 0; i < initialCards.length; i++){
-  const card = document.createElement('article')
+  let card = document.createElement('article')
   card.classList.add('card')
   
-  const cardImage = document.createElement('img')
+  let cardImage = document.createElement('img')
   cardImage.classList.add('card__image')
   cardImage.setAttribute('src', initialCards[i].link)
   cardImage.setAttribute('alt', initialCards[i].name)
 
-  const cardInfo = document.createElement('div')
+  let cardInfo = document.createElement('div')
   cardInfo.classList.add('card__info')
 
-  const cardName = document.createElement('h2')
+  let cardName = document.createElement('h2')
   cardName.classList.add('card__name')
   cardName.textContent = initialCards[i].name
 
-  const cardLike = document.createElement('button')
+  let cardLike = document.createElement('button')
   cardLike.classList.add('card__like')
 
   cardInfo.append(cardName, cardLike)
@@ -108,3 +108,39 @@ const butttonCloseAddCardPopup = addCardPopup.querySelector('.popup__close-butto
 butttonCloseAddCardPopup.addEventListener('click', function(){
   addCardPopup.classList.remove('popup_opened')
 })
+
+// Реализуем добавление карточки через форму
+const addCardForm = addCardPopup.querySelector('.form')
+const cardNameInput = addCardPopup.querySelector('[name = cardname]')
+const cardLinkInput = addCardPopup.querySelector('[name = cardlink]')
+
+function addCard(evt){
+  evt.preventDefault()
+  let card = document.createElement('article')
+  card.classList.add('card')
+  
+  let cardImage = document.createElement('img')
+  cardImage.classList.add('card__image')
+  cardImage.setAttribute('src', cardLinkInput.value)
+  cardImage.setAttribute('alt', cardNameInput.value)
+
+  let cardInfo = document.createElement('div')
+  cardInfo.classList.add('card__info')
+
+  let cardName = document.createElement('h2')
+  cardName.classList.add('card__name')
+  cardName.textContent = cardNameInput.value
+
+  let cardLike = document.createElement('button')
+  cardLike.classList.add('card__like')
+
+  cardInfo.append(cardName, cardLike)
+  card.append(cardImage, cardInfo)
+  cards.prepend(card)
+  
+  addCardPopup.classList.remove('popup_opened')
+  cardLinkInput.value = ''
+  cardNameInput.value = ''
+}
+
+addCardForm.addEventListener('submit', addCard)
