@@ -1,15 +1,16 @@
 const profile = document.querySelector('.profile') // Объявляем переменную профиля
 const editProfilePopup = document.querySelector('#editProfilePopup') // Объявляем переменную попапа редактирования профиля
+const addCardPopup = document.querySelector('#addCardPopup') // Объявляем переменную попапа добавления карточки
 
 // Реализуем открытие окна редактирования профиля по клику на кнопку редактирования профиля
-const buttonOpenEditProfile = profile.querySelector('.user__edit-button');
-buttonOpenEditProfile.addEventListener('click', function(){
+const buttonOpenEditProfilePopup = profile.querySelector('.user__edit-button');
+buttonOpenEditProfilePopup.addEventListener('click', function(){
   editProfilePopup.classList.add('popup_opened')
 })
 
 // Реализуем закрытие окна редактирования профиля по клику на крестик
-const buttonCloseEditProfile = editProfilePopup.querySelector('.popup__close-button')
-buttonCloseEditProfile.addEventListener('click', function(){
+const buttonCloseEditProfilePopup = editProfilePopup.querySelector('.popup__close-button')
+buttonCloseEditProfilePopup.addEventListener('click', function(){
   editProfilePopup.classList.remove('popup_opened')
 })
 
@@ -28,7 +29,7 @@ function parseUserName() {
 parseUserName()
 
 // Реализуем сохранение исходных значений value инпутов при закрытии попапа
-buttonCloseEditProfile.addEventListener('click', parseUserName)
+buttonCloseEditProfilePopup.addEventListener('click', parseUserName)
 
 
 // Реализуем сохранение данных из формы
@@ -71,26 +72,39 @@ const initialCards = [
   },
 ];
 
-  for(i = 0; i < initialCards.length; i++){
-    const card = document.createElement('article')
-    card.classList.add('card')
+for(i = 0; i < initialCards.length; i++){
+  const card = document.createElement('article')
+  card.classList.add('card')
+  
+  const cardImage = document.createElement('img')
+  cardImage.classList.add('card__image')
+  cardImage.setAttribute('src', initialCards[i].link)
+  cardImage.setAttribute('alt', initialCards[i].name)
 
-    const cardImage = document.createElement('img')
-    cardImage.classList.add('card__image')
-    cardImage.setAttribute('src', initialCards[i].link)
-    cardImage.setAttribute('alt', initialCards[i].name)
+  const cardInfo = document.createElement('div')
+  cardInfo.classList.add('card__info')
 
-    const cardInfo = document.createElement('div')
-    cardInfo.classList.add('card__info')
+  const cardName = document.createElement('h2')
+  cardName.classList.add('card__name')
+  cardName.textContent = initialCards[i].name
 
-    const cardName = document.createElement('h2')
-    cardName.classList.add('card__name')
-    cardName.textContent = initialCards[i].name
+  const cardLike = document.createElement('button')
+  cardLike.classList.add('card__like')
 
-    const cardLike = document.createElement('button')
-    cardLike.classList.add('card__like')
+  cardInfo.append(cardName, cardLike)
+  card.append(cardImage, cardInfo)
+  cards.append(card)
+}
 
-    cardInfo.append(cardName, cardLike)
-    card.append(cardImage, cardInfo)
-    cards.append(card)
-  }
+
+// Реализуем открытие окна добавления карточки по клику на кнопку редактирования профиля
+const buttonOpenAddCardPopup = profile.querySelector('.profile__add-button')
+buttonOpenAddCardPopup.addEventListener('click', function(){
+  addCardPopup.classList.add('popup_opened')
+})
+
+// Реализуем закрытие окна добавления карточки по клику на крестик
+const butttonCloseAddCardPopup = addCardPopup.querySelector('.popup__close-button')
+butttonCloseAddCardPopup.addEventListener('click', function(){
+  addCardPopup.classList.remove('popup_opened')
+})
