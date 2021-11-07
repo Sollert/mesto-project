@@ -73,27 +73,21 @@ const initialCards = [
 ];
 
 for(i = 0; i < initialCards.length; i++){
-  let card = document.createElement('article')
-  card.classList.add('card')
+  const cardTemplate = document.querySelector("#card-template").content;
+  const card = cardTemplate.querySelector('.card').cloneNode(true);
   
-  let cardImage = document.createElement('img')
-  cardImage.classList.add('card__image')
-  cardImage.setAttribute('src', initialCards[i].link)
-  cardImage.setAttribute('alt', initialCards[i].name)
+  card.querySelector('.card__image').src = initialCards[i].link;
+  card.querySelector('.card__image').alt = initialCards[i].name;
 
-  let cardInfo = document.createElement('div')
-  cardInfo.classList.add('card__info')
+  card.querySelector('.card__name').textContent = initialCards[i].name;
 
-  let cardName = document.createElement('h2')
-  cardName.classList.add('card__name')
-  cardName.textContent = initialCards[i].name
+  card.querySelector('.card__like').type = 'button';
+  card.querySelector('.card__like').ariaLabel = 'Нравится';
 
-  let cardLike = document.createElement('button')
-  cardLike.classList.add('card__like')
+  card.querySelector('.card__delete').type = 'button';
+  card.querySelector('.card__delete').ariaLabel = 'Удалить';
 
-  cardInfo.append(cardName, cardLike)
-  card.append(cardImage, cardInfo)
-  cards.append(card)
+  cards.prepend(card)
 }
 
 
@@ -116,26 +110,21 @@ const cardLinkInput = addCardPopup.querySelector('[name = cardlink]')
 
 function addCard(evt){
   evt.preventDefault()
-  let card = document.createElement('article')
-  card.classList.add('card')
+
+  const cardTemplate = document.querySelector("#card-template").content;
+  const card = cardTemplate.querySelector('.card').cloneNode(true);
   
-  let cardImage = document.createElement('img')
-  cardImage.classList.add('card__image')
-  cardImage.setAttribute('src', cardLinkInput.value)
-  cardImage.setAttribute('alt', cardNameInput.value)
+  card.querySelector('.card__image').src = cardLinkInput.value;
+  card.querySelector('.card__image').alt = cardNameInput.value;
 
-  let cardInfo = document.createElement('div')
-  cardInfo.classList.add('card__info')
+  card.querySelector('.card__name').textContent = cardNameInput.value;
 
-  let cardName = document.createElement('h2')
-  cardName.classList.add('card__name')
-  cardName.textContent = cardNameInput.value
+  card.querySelector('.card__like').type = 'button';
+  card.querySelector('.card__like').ariaLabel = 'Нравится';
 
-  let cardLike = document.createElement('button')
-  cardLike.classList.add('card__like')
+  card.querySelector('.card__delete').type = 'button';
+  card.querySelector('.card__delete').ariaLabel = 'Удалить';
 
-  cardInfo.append(cardName, cardLike)
-  card.append(cardImage, cardInfo)
   cards.prepend(card)
   
   addCardPopup.classList.remove('popup_opened')
