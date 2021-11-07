@@ -83,9 +83,11 @@ for(i = 0; i < initialCards.length; i++){
 
   card.querySelector('.card__like').type = 'button';
   card.querySelector('.card__like').ariaLabel = 'Нравится';
+  card.querySelector('.card__like').addEventListener('click', likeCard)
 
   card.querySelector('.card__delete').type = 'button';
   card.querySelector('.card__delete').ariaLabel = 'Удалить';
+  card.querySelector('.card__delete').addEventListener('click', deleteCard)
 
   cards.prepend(card)
 }
@@ -121,9 +123,11 @@ function addCard(evt){
 
   card.querySelector('.card__like').type = 'button';
   card.querySelector('.card__like').ariaLabel = 'Нравится';
+  card.querySelector('.card__like').addEventListener('click', likeCard)
 
   card.querySelector('.card__delete').type = 'button';
   card.querySelector('.card__delete').ariaLabel = 'Удалить';
+  card.querySelector('.card__delete').addEventListener('click', deleteCard)
 
   cards.prepend(card)
   
@@ -133,3 +137,15 @@ function addCard(evt){
 }
 
 addCardForm.addEventListener('submit', addCard)
+
+
+// Функция для реализации возможности ставить лайки
+function likeCard(evt){
+  evt.target.classList.toggle('card__like_active')
+}
+
+
+// Функция для реализации удаления карточек
+function deleteCard(evt){
+  evt.target.closest('.card').remove()
+}
