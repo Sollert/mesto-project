@@ -1,0 +1,10 @@
+.card-popup__container {
+  margin: 27px 0 0;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .card-popup__container {
+    margin: 0;
+  }
+  }

@@ -6,12 +6,14 @@ const addCardPopup = document.querySelector('#addCardPopup') // Объявляе
 const buttonOpenEditProfilePopup = profile.querySelector('.user__edit-button');
 buttonOpenEditProfilePopup.addEventListener('click', function(){
   editProfilePopup.classList.add('popup_opened')
+  editProfilePopup.classList.remove('popup-smooth-closing')
 })
 
 // Реализуем закрытие окна редактирования профиля по клику на крестик
 const buttonCloseEditProfilePopup = editProfilePopup.querySelector('.popup__close-button')
 buttonCloseEditProfilePopup.addEventListener('click', function(){
   editProfilePopup.classList.remove('popup_opened')
+  editProfilePopup.classList.add('popup-smooth-closing')
 })
 
 // Подставляем в value инпутов редактирования профиля значения со страницы
@@ -47,7 +49,7 @@ editProfileForm.addEventListener('submit', formSubmitHandler);
 const cards = document.querySelector('.cards')
 const initialCards = [
   {
-    name: 'Медведь',
+    name: 'Мишка',
     link: 'https://images.unsplash.com/photo-1576076819613-26f8537ae375?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=735&q=80'
   },
   {
@@ -78,6 +80,7 @@ for(i = 0; i < initialCards.length; i++){
   
   card.querySelector('.card__image').src = initialCards[i].link;
   card.querySelector('.card__image').alt = initialCards[i].name;
+  card.querySelector('.card__image').addEventListener('click', openCardPopup)
 
   card.querySelector('.card__name').textContent = initialCards[i].name;
 
@@ -97,12 +100,14 @@ for(i = 0; i < initialCards.length; i++){
 const buttonOpenAddCardPopup = profile.querySelector('.profile__add-button')
 buttonOpenAddCardPopup.addEventListener('click', function(){
   addCardPopup.classList.add('popup_opened')
+  addCardPopup.classList.remove('popup-smooth-closing')
 })
 
 // Реализуем закрытие окна добавления карточки по клику на крестик
 const butttonCloseAddCardPopup = addCardPopup.querySelector('.popup__close-button')
 butttonCloseAddCardPopup.addEventListener('click', function(){
   addCardPopup.classList.remove('popup_opened')
+  addCardPopup.classList.add('popup-smooth-closing')
 })
 
 // Реализуем добавление карточки через форму
@@ -118,6 +123,7 @@ function addCard(evt){
   
   card.querySelector('.card__image').src = cardLinkInput.value;
   card.querySelector('.card__image').alt = cardNameInput.value;
+  card.querySelector('.card__image').addEventListener('click', openCardPopup)
 
   card.querySelector('.card__name').textContent = cardNameInput.value;
 
@@ -149,3 +155,25 @@ function likeCard(evt){
 function deleteCard(evt){
   evt.target.closest('.card').remove()
 }
+
+// Функция открытия попапа с изображением по нажатию на картинку
+function openCardPopup(evt){
+  let cardPopup = document.querySelector('.card-popup')
+
+  cardPopup.classList.add('card-popup_opened')
+  cardPopup.classList.remove('popup-smooth-closing')
+
+  cardPopup.querySelector('.card-popup__image').src = evt.target.closest('.card__image').src
+  cardPopup.querySelector('.card-popup__image').alt = evt.target.nextElementSibling.textContent
+
+  cardPopup.querySelector('.card-popup__description').textContent = evt.target.nextElementSibling.textContent
+}
+
+// Функция закрытия попапа с изображением по нажатию на крестик
+let cardPopup = document.querySelector('.card-popup')
+const cardPopupCloseButton = cardPopup.querySelector('.card-popup__close-button')
+
+cardPopupCloseButton.addEventListener('click', function(){
+  cardPopup.classList.remove('card-popup_opened')
+  cardPopup.classList.add('popup-smooth-closing')
+})
