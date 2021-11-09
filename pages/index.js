@@ -1,6 +1,6 @@
 const profile = document.querySelector('.profile') // Объявляем переменную профиля
-const editProfilePopup = document.querySelector('#editProfilePopup') // Объявляем переменную попапа редактирования профиля
-const addCardPopup = document.querySelector('#addCardPopup') // Объявляем переменную попапа добавления карточки
+const editProfilePopup = document.querySelector('#popup-edit-profile') // Объявляем переменную попапа редактирования профиля
+const addCardPopup = document.querySelector('#popup-add-card') // Объявляем переменную попапа добавления карточки
 
 // Реализуем открытие окна редактирования профиля по клику на кнопку редактирования профиля
 const buttonOpenEditProfilePopup = profile.querySelector('.user__edit-button');
@@ -74,7 +74,7 @@ const initialCards = [
   },
 ];
 
-for(i = 0; i < initialCards.length; i++){
+initialCards.forEach(function(name, i){
   const cardTemplate = document.querySelector("#card-template").content;
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   
@@ -93,7 +93,7 @@ for(i = 0; i < initialCards.length; i++){
   card.querySelector('.card__delete').addEventListener('click', deleteCard)
 
   cards.prepend(card)
-}
+})
 
 
 // Реализуем открытие окна добавления карточки по клику на кнопку редактирования профиля
