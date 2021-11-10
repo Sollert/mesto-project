@@ -1,23 +1,23 @@
 const profile = document.querySelector('.profile') // Объявляем переменную профиля
-const editProfilePopup = document.querySelector('#popup-edit-profile') // Объявляем переменную попапа редактирования профиля
-const addCardPopup = document.querySelector('#popup-add-card') // Объявляем переменную попапа добавления карточки
+const popupEditProfile = document.querySelector('#popup-edit-profile') // Объявляем переменную попапа редактирования профиля
+const popupAddCard = document.querySelector('#popup-add-card') // Объявляем переменную попапа добавления карточки
 
 // Реализуем открытие окна редактирования профиля по клику на кнопку редактирования профиля
-const buttonOpenEditProfilePopup = profile.querySelector('.user__edit-button');
-buttonOpenEditProfilePopup.addEventListener('click', function(){
-  editProfilePopup.classList.add('popup_opened')
-  editProfilePopup.classList.remove('popup-smooth-closing')
+const buttonOpenPopupEditProfile = profile.querySelector('.user__edit-button');
+buttonOpenPopupEditProfile.addEventListener('click', function(){
+  popupEditProfile.classList.add('popup_opened')
+  popupEditProfile.classList.remove('popup-smooth-closing')
 })
 
 // Реализуем закрытие окна редактирования профиля по клику на крестик
-const buttonCloseEditProfilePopup = editProfilePopup.querySelector('.popup__close-button')
-buttonCloseEditProfilePopup.addEventListener('click', function(){
-  editProfilePopup.classList.remove('popup_opened')
-  editProfilePopup.classList.add('popup-smooth-closing')
+const buttonClosePopupEditProfile = popupEditProfile.querySelector('.popup__close-button')
+buttonClosePopupEditProfile.addEventListener('click', function(){
+  popupEditProfile.classList.remove('popup_opened')
+  popupEditProfile.classList.add('popup-smooth-closing')
 })
 
 // Подставляем в value инпутов редактирования профиля значения со страницы
-const editProfileForm = editProfilePopup.querySelector('.form')
+const editProfileForm = popupEditProfile.querySelector('.form')
 const userNameInput = editProfileForm.querySelector('[name = username]')
 const userStatusInput = editProfileForm.querySelector('[name = userstatus]')
 const userName = profile.querySelector('.user__name')
@@ -31,7 +31,7 @@ function parseUserName() {
 parseUserName()
 
 // Реализуем сохранение исходных значений value инпутов при закрытии попапа
-buttonCloseEditProfilePopup.addEventListener('click', parseUserName)
+buttonClosePopupEditProfile.addEventListener('click', parseUserName)
 
 
 // Реализуем сохранение данных из формы
@@ -39,7 +39,7 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   userName.textContent = userNameInput.value;
   userStatus.textContent = userStatusInput.value;
-  editProfilePopup.classList.remove('popup_opened')
+  popupEditProfile.classList.remove('popup_opened')
 }
 
 editProfileForm.addEventListener('submit', formSubmitHandler);
@@ -97,23 +97,23 @@ initialCards.forEach(function(name, i){
 
 
 // Реализуем открытие окна добавления карточки по клику на кнопку редактирования профиля
-const buttonOpenAddCardPopup = profile.querySelector('.profile__add-button')
-buttonOpenAddCardPopup.addEventListener('click', function(){
-  addCardPopup.classList.add('popup_opened')
-  addCardPopup.classList.remove('popup-smooth-closing')
+const buttonOpenPopupAddCard = profile.querySelector('.profile__add-button')
+buttonOpenPopupAddCard.addEventListener('click', function(){
+  popupAddCard.classList.add('popup_opened')
+  popupAddCard.classList.remove('popup-smooth-closing')
 })
 
 // Реализуем закрытие окна добавления карточки по клику на крестик
-const butttonCloseAddCardPopup = addCardPopup.querySelector('.popup__close-button')
-butttonCloseAddCardPopup.addEventListener('click', function(){
-  addCardPopup.classList.remove('popup_opened')
-  addCardPopup.classList.add('popup-smooth-closing')
+const butttonClosePopupAddCard = popupAddCard.querySelector('.popup__close-button')
+butttonClosePopupAddCard.addEventListener('click', function(){
+  popupAddCard.classList.remove('popup_opened')
+  popupAddCard.classList.add('popup-smooth-closing')
 })
 
 // Реализуем добавление карточки через форму
-const addCardForm = addCardPopup.querySelector('.form')
-const cardNameInput = addCardPopup.querySelector('[name = cardname]')
-const cardLinkInput = addCardPopup.querySelector('[name = cardlink]')
+const addCardForm = popupAddCard.querySelector('.form')
+const cardNameInput = popupAddCard.querySelector('[name = cardname]')
+const cardLinkInput = popupAddCard.querySelector('[name = cardlink]')
 
 function addCard(evt){
   evt.preventDefault()
@@ -136,8 +136,8 @@ function addCard(evt){
   card.querySelector('.card__delete').addEventListener('click', deleteCard)
 
   cards.prepend(card)
-  
-  addCardPopup.classList.remove('popup_opened')
+
+  popupAddCard.classList.remove('popup_opened')
   cardLinkInput.value = ''
   cardNameInput.value = ''
 }
