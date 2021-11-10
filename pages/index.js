@@ -96,37 +96,6 @@ buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard, '
 // Плавно закрыть попап загрузки карточки
 buttonClosePopupAddCard.addEventListener('click', () => closePopup(popupAddCard, 'popup_opened'))
 
-
-// Загрузить карточку
-function addCard(evt){
-  evt.preventDefault()
-
-  const cardTemplate = document.querySelector("#card-template").content;
-  const card = cardTemplate.querySelector('.card').cloneNode(true);
-
-  card.querySelector('.card__image').src = cardLinkInput.value;
-  card.querySelector('.card__image').alt = cardNameInput.value;
-  card.querySelector('.card__image').addEventListener('click', openCardPopup)
-
-  card.querySelector('.card__name').textContent = cardNameInput.value;
-
-  card.querySelector('.card__like').type = 'button';
-  card.querySelector('.card__like').ariaLabel = 'Нравится';
-  card.querySelector('.card__like').addEventListener('click', likeCard)
-
-  card.querySelector('.card__delete').type = 'button';
-  card.querySelector('.card__delete').ariaLabel = 'Удалить';
-  card.querySelector('.card__delete').addEventListener('click', deleteCard)
-
-  cards.prepend(card)
-
-  popupAddCard.classList.remove('popup_opened') // Закрываем попап, после нажатия на кнопку submit
-  cardLinkInput.value.reset() // Очищаем исходные значения ссылки после закрытия попапа
-  cardNameInput.value.reset() // Очищаем исходные значения названия после закрытия попапа
-}
-
-addCardForm.addEventListener('submit', addCard)
-
 // Поставить лайк карточке
 function likeCard(evt){
   evt.target.classList.toggle('card__like_active')
@@ -153,24 +122,35 @@ function openCardPopup(evt){
 cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup, 'card-popup_opened'))
 
 
-// Загрузить шесть карточек из коробки
-initialCards.forEach(function(name, i){
+
+// Создать карточку
+function createCard(name, link){
   const cardTemplate = document.querySelector("#card-template").content;
   const card = cardTemplate.querySelector('.card').cloneNode(true);
 
-  card.querySelector('.card__image').src = initialCards[i].link;
-  card.querySelector('.card__image').alt = initialCards[i].name;
+  card.querySelector('.card__image').alt = name;
+  card.querySelector('.card__name').textContent = name;
+  card.querySelector('.card__image').src = link;
+
   card.querySelector('.card__image').addEventListener('click', openCardPopup)
-
-  card.querySelector('.card__name').textContent = initialCards[i].name;
-
-  card.querySelector('.card__like').type = 'button';
-  card.querySelector('.card__like').ariaLabel = 'Нравится';
   card.querySelector('.card__like').addEventListener('click', likeCard)
-
-  card.querySelector('.card__delete').type = 'button';
-  card.querySelector('.card__delete').ariaLabel = 'Удалить';
   card.querySelector('.card__delete').addEventListener('click', deleteCard)
 
   cards.prepend(card)
-})
+}
+
+// Добавить карточку
+function addCard(evt){
+  evt.preventDefault()
+  createCard(cardNameInput.value, cardLinkInput.value)
+
+  popupAddCard.classList.remove('popup_opened')
+  addCardForm.reset()
+}
+addCardForm.addEventListener('submit', addCard)
+
+
+// Загрузить шесть карточек из коробки
+for(i = 0; i < initialCards.length; i++){
+  createCard(initialCards[i].name, initialCards[i].link)
+}
