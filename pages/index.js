@@ -3,13 +3,13 @@ const profile = document.querySelector('.profile') // Профиль
 const popupEditProfile = document.querySelector('#popup-edit-profile') // Попап редактирования профиля
 const buttonOpenPopupEditProfile = profile.querySelector('.user__edit-button'); // Кнопка открыть попап редактирования профиля
 
-function openPopup(popupName){
-  popupName.classList.add('popup_opened')
+function openPopup(popupName, popupClassName){
+  popupName.classList.add(popupClassName)
   popupName.classList.remove('popup-smooth-closing') // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
 }
 
 buttonOpenPopupEditProfile.addEventListener('click', function () {
-  openPopup(popupEditProfile)
+  openPopup(popupEditProfile, 'popup_opened')
   parseUserInfo()
 })
 
@@ -17,13 +17,13 @@ buttonOpenPopupEditProfile.addEventListener('click', function () {
 // Плавно закрыть попап редактирования профиля
 const buttonClosePopupEditProfile = popupEditProfile.querySelector('.popup__close-button') // Кнопка закрыть попап редактирования профиля
 
-function closePopup(popupName){
-  popupName.classList.remove('popup_opened')
+function closePopup(popupName, popupClassName){
+  popupName.classList.remove(popupClassName)
   popupName.classList.add('popup-smooth-closing') // Добавляем класс, чтобы анимация плавности срабатывала только после открытия попапа
 }
 
 buttonClosePopupEditProfile.addEventListener('click', function () {
-  closePopup(popupEditProfile)
+  closePopup(popupEditProfile, 'popup_opened')
   parseUserInfo()
 })
 
@@ -105,13 +105,13 @@ initialCards.forEach(function(name, i){
 const popupAddCard = document.querySelector('#popup-add-card') // Попап загрузки карточки
 const buttonOpenPopupAddCard = profile.querySelector('.profile__add-button') // Кнопка открыть попап загрузки карточки
 
-buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard))
+buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard, 'popup_opened'))
 
 
 // Плавно закрыть попап загрузки карточки
 const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close-button') // Кнопка закрыть попап загрузки карточки
 
-buttonClosePopupAddCard.addEventListener('click', () => closePopup(popupAddCard))
+buttonClosePopupAddCard.addEventListener('click', () => closePopup(popupAddCard, 'popup_opened'))
 
 
 // Загрузить карточку
@@ -142,8 +142,8 @@ function addCard(evt){
   cards.prepend(card)
 
   popupAddCard.classList.remove('popup_opened') // Закрываем попап, после нажатия на кнопку submit
-  cardLinkInput.value = '' // Очищаем исходные значения ссылки после закрытия попапа
-  cardNameInput.value = '' // Очищаем исходные значения названия после закрытия попапа
+  cardLinkInput.value.reset() // Очищаем исходные значения ссылки после закрытия попапа
+  cardNameInput.value.reset() // Очищаем исходные значения названия после закрытия попапа
 }
 
 addCardForm.addEventListener('submit', addCard)
@@ -164,8 +164,7 @@ function deleteCard(evt){
 const cardPopup = document.querySelector('.card-popup')
 
 function openCardPopup(evt){
-  cardPopup.classList.add('card-popup_opened')
-  cardPopup.classList.remove('popup-smooth-closing')
+  openPopup(cardPopup, 'card-popup_opened')
 
   cardPopup.querySelector('.card-popup__image').src = evt.target.closest('.card__image').src
   cardPopup.querySelector('.card-popup__image').alt = evt.target.nextElementSibling.textContent
@@ -176,8 +175,4 @@ function openCardPopup(evt){
 
 // Закрыть попап с изображением
 const cardPopupCloseButton = cardPopup.querySelector('.card-popup__close-button')
-
-cardPopupCloseButton.addEventListener('click', function closeCardPopup(){
-  cardPopup.classList.remove('card-popup_opened')
-  cardPopup.classList.add('popup-smooth-closing')
-})
+cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup, 'card-popup_opened'))
