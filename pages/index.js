@@ -80,8 +80,8 @@ const initialCards = [
 ];
 
 initialCards.forEach(function(name, i){
-  const cardTemplate = document.querySelector("#card-template").content;
-  const card = cardTemplate.querySelector('.card').cloneNode(true);
+  let cardTemplate = document.querySelector("#card-template").content;
+  let card = cardTemplate.querySelector('.card').cloneNode(true);
 
   card.querySelector('.card__image').src = initialCards[i].link;
   card.querySelector('.card__image').alt = initialCards[i].name;
@@ -122,8 +122,8 @@ const cardLinkInput = popupAddCard.querySelector('[name = cardlink]') // Инп�
 function addCard(evt){
   evt.preventDefault()
 
-  const cardTemplate = document.querySelector("#card-template").content;
-  const card = cardTemplate.querySelector('.card').cloneNode(true);
+  let cardTemplate = document.querySelector("#card-template").content;
+  let card = cardTemplate.querySelector('.card').cloneNode(true);
 
   card.querySelector('.card__image').src = cardLinkInput.value;
   card.querySelector('.card__image').alt = cardNameInput.value;
