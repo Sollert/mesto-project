@@ -1,56 +1,15 @@
-// Плавно открыть попап редактирования профиля
 const profile = document.querySelector('.profile') // Профиль
 const popupEditProfile = document.querySelector('#popup-edit-profile') // Попап редактирования профиля
+
 const buttonOpenPopupEditProfile = profile.querySelector('.user__edit-button'); // Кнопка открыть попап редактирования профиля
-
-function openPopup(popupName, popupClassName){
-  popupName.classList.add(popupClassName)
-  popupName.classList.remove('popup-smooth-closing') // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
-}
-
-buttonOpenPopupEditProfile.addEventListener('click', function () {
-  openPopup(popupEditProfile, 'popup_opened')
-  parseUserInfo()
-})
-
-
-// Плавно закрыть попап редактирования профиля
 const buttonClosePopupEditProfile = popupEditProfile.querySelector('.popup__close-button') // Кнопка закрыть попап редактирования профиля
 
-function closePopup(popupName, popupClassName){
-  popupName.classList.remove(popupClassName)
-  popupName.classList.add('popup-smooth-closing') // Добавляем класс, чтобы анимация плавности срабатывала только после открытия попапа
-}
-
-buttonClosePopupEditProfile.addEventListener('click', function () {
-  closePopup(popupEditProfile, 'popup_opened')
-  parseUserInfo()
-})
-
-
-// Парсить информацию о юзере в value инпутов формы редактирования профиля
 const formEditProfile = popupEditProfile.querySelector('.form') // Форма редактирования профиля
 const userNameInput = formEditProfile.querySelector('[name = username]') // Инпут имени пользователя в форме редактирования профиля
 const userStatusInput = formEditProfile.querySelector('[name = userstatus]') // Инпут статуса пользователя в форме редактирования профиля
 const userName = profile.querySelector('.user__name') // Имя пользователя
 const userStatus = profile.querySelector('.user__status') // Статус пользователя
 
-function parseUserInfo() {
-  userNameInput.value = userName.textContent
-  userStatusInput.value = userStatus.textContent
-}
-
-
-// Сохранять данные из формы редактирования профиля по submit
-formEditProfile.addEventListener('submit', function formSubmitHandler(evt) {
-  evt.preventDefault();
-  userName.textContent = userNameInput.value;
-  userStatus.textContent = userStatusInput.value;
-  popupEditProfile.classList.remove('popup_opened')
-});
-
-
-// Загрузить шесть карточек из коробки
 const cards = document.querySelector('.cards') // Контейнер карточек
 const initialCards = [
   {
@@ -79,51 +38,71 @@ const initialCards = [
   },
 ];
 
-initialCards.forEach(function(name, i){
-  let cardTemplate = document.querySelector("#card-template").content;
-  let card = cardTemplate.querySelector('.card').cloneNode(true);
-
-  card.querySelector('.card__image').src = initialCards[i].link;
-  card.querySelector('.card__image').alt = initialCards[i].name;
-  card.querySelector('.card__image').addEventListener('click', openCardPopup)
-
-  card.querySelector('.card__name').textContent = initialCards[i].name;
-
-  card.querySelector('.card__like').type = 'button';
-  card.querySelector('.card__like').ariaLabel = 'Нравится';
-  card.querySelector('.card__like').addEventListener('click', likeCard)
-
-  card.querySelector('.card__delete').type = 'button';
-  card.querySelector('.card__delete').ariaLabel = 'Удалить';
-  card.querySelector('.card__delete').addEventListener('click', deleteCard)
-
-  cards.prepend(card)
-})
-
-
-// Плавно открыть попап загрузки карточки
 const popupAddCard = document.querySelector('#popup-add-card') // Попап загрузки карточки
 const buttonOpenPopupAddCard = profile.querySelector('.profile__add-button') // Кнопка открыть попап загрузки карточки
-
-buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard, 'popup_opened'))
-
-
-// Плавно закрыть попап загрузки карточки
 const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close-button') // Кнопка закрыть попап загрузки карточки
 
-buttonClosePopupAddCard.addEventListener('click', () => closePopup(popupAddCard, 'popup_opened'))
-
-
-// Загрузить карточку
 const addCardForm = popupAddCard.querySelector('.form') // Форма загрузки карточки
 const cardNameInput = popupAddCard.querySelector('[name = cardname]') // Инпут названия карточки в форме
 const cardLinkInput = popupAddCard.querySelector('[name = cardlink]') // Инпут ссылки на изображение карточке в форме
 
+const cardPopup = document.querySelector('.card-popup')
+const cardPopupCloseButton = cardPopup.querySelector('.card-popup__close-button')
+
+
+// Плавно открыть попап редактирования профиля
+function openPopup(popupName, popupClassName){
+  popupName.classList.add(popupClassName)
+  popupName.classList.remove('popup-smooth-closing') // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
+}
+
+buttonOpenPopupEditProfile.addEventListener('click', function () {
+  openPopup(popupEditProfile, 'popup_opened')
+  parseUserInfo()
+})
+
+
+// Плавно закрыть попап редактирования профиля
+function closePopup(popupName, popupClassName){
+  popupName.classList.remove(popupClassName)
+  popupName.classList.add('popup-smooth-closing') // Добавляем класс, чтобы анимация плавности срабатывала только после открытия попапа
+}
+
+buttonClosePopupEditProfile.addEventListener('click', function () {
+  closePopup(popupEditProfile, 'popup_opened')
+  parseUserInfo()
+})
+
+
+// Парсить информацию о юзере в value инпутов формы редактирования профиля
+function parseUserInfo() {
+  userNameInput.value = userName.textContent
+  userStatusInput.value = userStatus.textContent
+}
+
+
+// Сохранять данные из формы редактирования профиля по submit
+formEditProfile.addEventListener('submit', function formSubmitHandler(evt) {
+  evt.preventDefault();
+  userName.textContent = userNameInput.value;
+  userStatus.textContent = userStatusInput.value;
+  popupEditProfile.classList.remove('popup_opened')
+});
+
+// Плавно открыть попап загрузки карточки
+buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard, 'popup_opened'))
+
+
+// Плавно закрыть попап загрузки карточки
+buttonClosePopupAddCard.addEventListener('click', () => closePopup(popupAddCard, 'popup_opened'))
+
+
+// Загрузить карточку
 function addCard(evt){
   evt.preventDefault()
 
-  let cardTemplate = document.querySelector("#card-template").content;
-  let card = cardTemplate.querySelector('.card').cloneNode(true);
+  const cardTemplate = document.querySelector("#card-template").content;
+  const card = cardTemplate.querySelector('.card').cloneNode(true);
 
   card.querySelector('.card__image').src = cardLinkInput.value;
   card.querySelector('.card__image').alt = cardNameInput.value;
@@ -161,8 +140,6 @@ function deleteCard(evt){
 
 
 // Открыть попап с изображением
-const cardPopup = document.querySelector('.card-popup')
-
 function openCardPopup(evt){
   openPopup(cardPopup, 'card-popup_opened')
 
@@ -172,7 +149,28 @@ function openCardPopup(evt){
   cardPopup.querySelector('.card-popup__description').textContent = evt.target.nextElementSibling.textContent
 }
 
-
 // Закрыть попап с изображением
-const cardPopupCloseButton = cardPopup.querySelector('.card-popup__close-button')
 cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup, 'card-popup_opened'))
+
+
+// Загрузить шесть карточек из коробки
+initialCards.forEach(function(name, i){
+  const cardTemplate = document.querySelector("#card-template").content;
+  const card = cardTemplate.querySelector('.card').cloneNode(true);
+
+  card.querySelector('.card__image').src = initialCards[i].link;
+  card.querySelector('.card__image').alt = initialCards[i].name;
+  card.querySelector('.card__image').addEventListener('click', openCardPopup)
+
+  card.querySelector('.card__name').textContent = initialCards[i].name;
+
+  card.querySelector('.card__like').type = 'button';
+  card.querySelector('.card__like').ariaLabel = 'Нравится';
+  card.querySelector('.card__like').addEventListener('click', likeCard)
+
+  card.querySelector('.card__delete').type = 'button';
+  card.querySelector('.card__delete').ariaLabel = 'Удалить';
+  card.querySelector('.card__delete').addEventListener('click', deleteCard)
+
+  cards.prepend(card)
+})
