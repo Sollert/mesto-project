@@ -89,12 +89,17 @@ formEditProfile.addEventListener('submit', function formSubmitHandler(evt) {
   popupEditProfile.classList.remove('popup_opened')
 });
 
+
 // Плавно открыть попап загрузки карточки
 buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard, 'popup_opened'))
 
 
 // Плавно закрыть попап загрузки карточки
-buttonClosePopupAddCard.addEventListener('click', () => closePopup(popupAddCard, 'popup_opened'))
+buttonClosePopupAddCard.addEventListener('click', function () {
+  closePopup(popupAddCard, 'popup_opened')
+  addCardForm.reset()
+})
+
 
 // Поставить лайк карточке
 function likeCard(evt){
@@ -118,9 +123,9 @@ function openCardPopup(evt){
   cardPopup.querySelector('.card-popup__description').textContent = evt.target.nextElementSibling.textContent
 }
 
+
 // Закрыть попап с изображением
 cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup, 'card-popup_opened'))
-
 
 
 // Создать карточку
