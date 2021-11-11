@@ -46,16 +46,15 @@ const addCardForm = popupAddCard.querySelector('.form') // Форма загру
 const cardNameInput = popupAddCard.querySelector('[name = cardname]') // Инпут названия карточки в форме
 const cardLinkInput = popupAddCard.querySelector('[name = cardlink]') // Инпут ссылки на изображение карточке в форме
 
-const cardPopup = document.querySelector('.card-popup')
-const cardPopupCloseButton = cardPopup.querySelector('.card-popup__close-button')
+const cardPopup = document.querySelector('#card-popup')
+const cardPopupCloseButton = cardPopup.querySelector('.popup__close-button')
 
 
 // Плавно открыть попап редактирования профиля
-function openPopup(popupName, popupClassName){
-  popupName.classList.add(popupClassName)
+function openPopup(popupName){
+  popupName.classList.add('popup_opened')
   popupName.classList.remove('popup-smooth-closing') // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
 }
-
 buttonOpenPopupEditProfile.addEventListener('click', function () {
   openPopup(popupEditProfile, 'popup_opened')
   parseUserInfo()
@@ -63,11 +62,10 @@ buttonOpenPopupEditProfile.addEventListener('click', function () {
 
 
 // Плавно закрыть попап редактирования профиля
-function closePopup(popupName, popupClassName){
-  popupName.classList.remove(popupClassName)
+function closePopup(popupName){
+  popupName.classList.remove('popup_opened')
   popupName.classList.add('popup-smooth-closing') // Добавляем класс, чтобы анимация плавности срабатывала только после открытия попапа
 }
-
 buttonClosePopupEditProfile.addEventListener('click', function () {
   closePopup(popupEditProfile, 'popup_opened')
   parseUserInfo()
@@ -86,7 +84,7 @@ formEditProfile.addEventListener('submit', function formSubmitHandler(evt) {
   evt.preventDefault();
   userName.textContent = userNameInput.value;
   userStatus.textContent = userStatusInput.value;
-  popupEditProfile.classList.remove('popup_opened')
+  closePopup(popupEditProfile, 'popup_opened')
 });
 
 
@@ -117,15 +115,15 @@ function deleteCard(evt){
 function openCardPopup(evt){
   openPopup(cardPopup, 'card-popup_opened')
 
-  cardPopup.querySelector('.card-popup__image').src = evt.target.closest('.card__image').src
-  cardPopup.querySelector('.card-popup__image').alt = evt.target.nextElementSibling.textContent
+  cardPopup.querySelector('.popup__image').src = evt.target.closest('.card__image').src
+  cardPopup.querySelector('.popup__image').alt = evt.target.nextElementSibling.textContent
 
-  cardPopup.querySelector('.card-popup__description').textContent = evt.target.nextElementSibling.textContent
+  cardPopup.querySelector('.popup__description').textContent = evt.target.nextElementSibling.textContent
 }
 
 
 // Закрыть попап с изображением
-cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup, 'card-popup_opened'))
+cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup))
 
 
 // Создать карточку
@@ -141,21 +139,28 @@ function createCard(name, link){
   card.querySelector('.card__like').addEventListener('click', likeCard)
   card.querySelector('.card__delete').addEventListener('click', deleteCard)
 
-  cards.prepend(card)
+  return card
 }
 
-// Добавить карточку
+
+// Добавление карточки в контейнер
+function renderCard(container, element){
+  container.prepend(element)
+}
+
+
+// Добавить карточку в список карточек
 function addCard(evt){
   evt.preventDefault()
-  createCard(cardNameInput.value, cardLinkInput.value)
+  renderCard(cards, createCard(cardNameInput.value, cardLinkInput.value) );
 
-  popupAddCard.classList.remove('popup_opened')
+  closePopup(popupAddCard)
   addCardForm.reset()
 }
 addCardForm.addEventListener('submit', addCard)
 
 
 // Загрузить шесть карточек из коробки
-for(i = 0; i < initialCards.length; i++){
-  createCard(initialCards[i].name, initialCards[i].link)
-}
+initialCards.forEach(function (name, i){
+  renderCard(cards, createCard(initialCards[i].name, initialCards[i].link) )
+})
