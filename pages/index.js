@@ -56,7 +56,7 @@ function openPopup(popupName){
   popupName.classList.remove('popup-smooth-closing') // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
 }
 buttonOpenPopupEditProfile.addEventListener('click', function () {
-  openPopup(popupEditProfile, 'popup_opened')
+  openPopup(popupEditProfile)
   parseUserInfo()
 })
 
@@ -67,7 +67,7 @@ function closePopup(popupName){
   popupName.classList.add('popup-smooth-closing') // Добавляем класс, чтобы анимация плавности срабатывала только после открытия попапа
 }
 buttonClosePopupEditProfile.addEventListener('click', function () {
-  closePopup(popupEditProfile, 'popup_opened')
+  closePopup(popupEditProfile)
   parseUserInfo()
 })
 
@@ -84,17 +84,17 @@ formEditProfile.addEventListener('submit', function formSubmitHandler(evt) {
   evt.preventDefault();
   userName.textContent = userNameInput.value;
   userStatus.textContent = userStatusInput.value;
-  closePopup(popupEditProfile, 'popup_opened')
+  closePopup(popupEditProfile)
 });
 
 
 // Плавно открыть попап загрузки карточки
-buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard, 'popup_opened'))
+buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard))
 
 
 // Плавно закрыть попап загрузки карточки
 buttonClosePopupAddCard.addEventListener('click', function () {
-  closePopup(popupAddCard, 'popup_opened')
+  closePopup(popupAddCard)
   addCardForm.reset()
 })
 
