@@ -113,7 +113,7 @@ function deleteCard(evt){
 
 // Открыть попап с изображением
 function openCardPopup(evt){
-  openPopup(cardPopup, 'card-popup_opened')
+  openPopup(cardPopup)
 
   cardPopup.querySelector('.popup__image').src = evt.target.closest('.card__image').src
   cardPopup.querySelector('.popup__image').alt = evt.target.nextElementSibling.textContent
