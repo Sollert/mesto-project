@@ -1,5 +1,5 @@
 .form__element {
-  margin: 0;
+  margin: 30px 0 0 0;
   padding: 0 0 9px;
   width: 238px;
   height: 27px;
@@ -7,6 +7,10 @@
   border: none;
   outline: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2); 
+}
+
+.form__element:first-of-type {
+  margin: 0;
 }
 
 @media (min-width: 768px) {

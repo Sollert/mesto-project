@@ -5,16 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
   <header class="header page__header">
-    <img src="./images/header/logo.svg" alt="Логотип «Mesto»" class="header__logo">
+    <img src="<%=require('./images/header/logo.svg')%>" alt="Логотип «Mesto»" class="header__logo">
   </header>
   <main class="content page__content">
     <section class="profile">
       <div class="user">
-        <img class="user__avatar" src="./images/profile/avatar.jpg" alt="Аватар профиля">
+        <img class="user__avatar" src="<%=require('./images/profile/avatar.jpg')%>" alt="Аватар профиля">
         <div class="user__info">
           <h1 class="user__name">Жак-Ив Кусто</h1>
           <button class="user__edit-button" type="button" aria-label="Отредактировать"></button>
@@ -36,10 +35,12 @@
         <h2 class="popup__title">
           Редактировать профиль
         </h2>
-        <form class="form" name="edit-profile">
+        <form class="form" name="edit-profile" novalidate>
           <fieldset class="form__fields">
-            <input type="text" class="form__element" name="username" placeholder="Введите имя" required>
-            <input type="text" class="form__element" name="userstatus" placeholder="Введите статус" required>
+            <input type="text" class="form__element" name="username" id="username" placeholder="Введите имя" minlength="2" maxlength="40" required>
+            <span id="error-username" class="error-message error-message_active"></span>
+            <input type="text" class="form__element" name="userstatus" id="userstatus" placeholder="Введите статус" minlength="2" maxlength="200" required>
+            <span id="error-userstatus" class="error-message error-message_active"></span>
           </fieldset>
           <button type="submit" class="form__save-button">
             Сохранить
@@ -53,10 +54,12 @@
         <h2 class="popup__title">
           Новое место
         </h2>
-        <form class="form" name="add-card">
+        <form class="form" name="add-card" novalidate>
           <fieldset class="form__fields">
-            <input type="text" class="form__element" name="cardname" placeholder="Название" required>
-            <input type="text" class="form__element" name="cardlink" placeholder="Ссылка на картинку" required>
+            <input type="text" class="form__element" name="cardname" id="cardname" placeholder="Название" minlength="2" maxlength="30" required>
+            <span id="error-cardname" class="error-message error-message_active"></span>
+            <input type="url" class="form__element" name="cardlink" id="cardlink" placeholder="Ссылка на картинку" required>
+            <span id="error-cardlink" class="error-message error-message_active"></span>
           </fieldset>
           <button type="submit" class="form__save-button">
             Создать
@@ -84,6 +87,5 @@
       </article>
     </template>
 
-    <script src="./pages/index.js"></script>
 </body>
 </html>
