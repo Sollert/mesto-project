@@ -5,7 +5,7 @@ import {
     addCardForm,
     cardNameInput,
     cardLinkInput
-} from './data.js'
+} from './utils.js'
 
 // Поставить лайк карточке
 function likeCard(evt){

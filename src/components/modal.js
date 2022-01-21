@@ -4,7 +4,7 @@ import {
     userName,
     userStatus,
     cardPopup
-} from './data.js'
+} from './utils.js'
 
 // Плавно открыть попап редактирования профиля
 function openPopup(popupName){

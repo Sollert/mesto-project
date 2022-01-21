@@ -15,7 +15,7 @@ import {
   addCardForm,
   cardPopup,
   cardPopupCloseButton
-} from './components/data.js'
+} from './components/utils.js'
 
 import {
   openPopup,
