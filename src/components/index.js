@@ -14,30 +14,26 @@ import {
   buttonClosePopupAddCard,
   addCardForm,
   cardPopup,
-  cardPopupCloseButton
-} from './components/utils.js'
+  cardPopupCloseButton, cardNameInput, cardLinkInput
+} from './utils.js'
 
 import {
   openPopup,
   closePopup,
-  parseUserInfo,
   handleEscPopupClose,
   handleOverlayPopupClose
-} from './components/modal.js'
+} from './modal.js'
 
 import {
   createCard,
-  renderCard,
-  addCard} from './components/card.js'
+  renderCard
+} from './card.js'
 
 import {
   enableValidation
-} from './components/validate.js'
+} from './validate.js'
 
-import './pages/index.css'
-
-// ПЕРЕМЕННЫЕ
-
+import '../pages/index.css'
 
 // Загрузить шесть карточек из коробки
 initialCards.forEach(function (name, i){
@@ -53,6 +49,29 @@ enableValidation({
   buttonSelector: '.form__save-button',
   buttonDisabledClass: 'form__save-button_disabled'
 })
+
+// Добавить карточку в список карточек
+function addCard(evt){
+  evt.preventDefault()
+  renderCard(cards, createCard(cardNameInput.value, cardLinkInput.value) );
+
+  closePopup(popupAddCard)
+  addCardForm.reset()
+  enableValidation({
+    formSelector: '.form',
+    inputSelector: '.form__element',
+    inputInvalidClass: 'form__element_invalid',
+    errorClass: 'error-message_active',
+    buttonSelector: '.form__save-button',
+    buttonDisabledClass: 'form__save-button_disabled'
+  })
+}
+
+// Парсить информацию о юзере в value инпутов формы редактирования профиля
+function parseUserInfo() {
+  userNameInput.value = userName.textContent
+  userStatusInput.value = userStatus.textContent
+}
 
 
 // СЛУШАТЕЛИ

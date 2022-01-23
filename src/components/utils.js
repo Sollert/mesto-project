@@ -48,6 +48,8 @@ const cardLinkInput = popupAddCard.querySelector('[name = cardlink]') // Инп�
 
 const cardPopup = document.querySelector('#card-popup')
 const cardPopupCloseButton = cardPopup.querySelector('.popup__close-button')
+const cardPopupImage = cardPopup.querySelector('.popup__image')
+const cardPopupDescription = cardPopup.querySelector('.popup__description')
 
 export {
     profile,
@@ -68,5 +70,7 @@ export {
     cardNameInput,
     cardLinkInput,
     cardPopup,
-    cardPopupCloseButton
+    cardPopupCloseButton,
+    cardPopupImage,
+    cardPopupDescription
 }

@@ -21,12 +21,13 @@ function deleteCard(evt){
 function createCard(name, link){
     const cardTemplate = document.querySelector("#card-template").content;
     const card = cardTemplate.querySelector('.card').cloneNode(true);
+    const cardImage = card.querySelector('.card__image')
 
-    card.querySelector('.card__image').alt = name;
+    cardImage.alt = name;
     card.querySelector('.card__name').textContent = name;
-    card.querySelector('.card__image').src = link;
+    cardImage.src = link;
 
-    card.querySelector('.card__image').addEventListener('click', openCardPopup)
+    cardImage.addEventListener('click', openCardPopup)
     card.querySelector('.card__like').addEventListener('click', likeCard)
     card.querySelector('.card__delete').addEventListener('click', deleteCard)
 
@@ -38,13 +39,4 @@ function renderCard(container, element){
     container.prepend(element)
 }
 
-// Добавить карточку в список карточек
-function addCard(evt){
-    evt.preventDefault()
-    renderCard(cards, createCard(cardNameInput.value, cardLinkInput.value) );
-
-    closePopup(popupAddCard)
-    addCardForm.reset()
-}
-
-export { likeCard, deleteCard, createCard, renderCard, addCard }
+export { likeCard, deleteCard, createCard, renderCard }
