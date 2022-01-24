@@ -14,6 +14,7 @@ import {
   buttonClosePopupAddCard,
   addCardForm,
   cardPopup,
+  saveButton,
   cardPopupCloseButton, cardNameInput, cardLinkInput
 } from './utils.js'
 
@@ -30,7 +31,8 @@ import {
 } from './card.js'
 
 import {
-  enableValidation
+  enableValidation,
+  disableButton
 } from './validate.js'
 
 import '../pages/index.css'
@@ -57,14 +59,7 @@ function addCard(evt){
 
   closePopup(popupAddCard)
   addCardForm.reset()
-  enableValidation({
-    formSelector: '.form',
-    inputSelector: '.form__element',
-    inputInvalidClass: 'form__element_invalid',
-    errorClass: 'error-message_active',
-    buttonSelector: '.form__save-button',
-    buttonDisabledClass: 'form__save-button_disabled'
-  })
+  disableButton(saveButton, 'form__save-button_disabled')
 }
 
 // Парсить информацию о юзере в value инпутов формы редактирования профиля
@@ -98,8 +93,6 @@ buttonClosePopupEditProfile.addEventListener('click', function () {
   closePopup(popupEditProfile)
   parseUserInfo()
 })
-// По клавише Esc
-document.addEventListener('keydown', handleEscPopupClose)
 // По клику на оверлей
 popupEditProfile.addEventListener('click', handleOverlayPopupClose)
 
@@ -109,16 +102,12 @@ buttonClosePopupAddCard.addEventListener('click', function () {
   closePopup(popupAddCard)
   addCardForm.reset()
 })
-// По клавише Esc
-document.addEventListener('keydown', handleEscPopupClose)
 // По клику на оверлей
 popupAddCard.addEventListener('click', handleOverlayPopupClose)
 
 // Закрыть попап с изображением
 // По клику на крестик
 cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup))
-// По клавише Esc
-document.addEventListener('keydown', handleEscPopupClose)
 // По клику на оверлей
 cardPopup.addEventListener('click', handleOverlayPopupClose)
 

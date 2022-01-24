@@ -41,6 +41,7 @@ const initialCards = [
 const popupAddCard = document.querySelector('#popup-add-card') // Попап загрузки карточки
 const buttonOpenPopupAddCard = profile.querySelector('.profile__add-button') // Кнопка открыть попап загрузки карточки
 const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close-button') // Кнопка закрыть попап загрузки карточки
+const saveButton = popupAddCard.querySelector('.form__save-button') // Кнопка сохранения
 
 const addCardForm = popupAddCard.querySelector('.form') // Форма загрузки карточки
 const cardNameInput = popupAddCard.querySelector('[name = cardname]') // Инпут названия карточки в форме
@@ -72,5 +73,6 @@ export {
     cardPopup,
     cardPopupCloseButton,
     cardPopupImage,
-    cardPopupDescription
+    cardPopupDescription,
+    saveButton
 }

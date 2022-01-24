@@ -6,6 +6,7 @@ import {
 
 // Плавно открыть попап редактирования профиля
 function openPopup(popupName){
+    document.addEventListener('keydown', handleEscPopupClose);
     popupName.classList.add('popup_opened')
     popupName.classList.remove('popup-smooth-closing') // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
 }
@@ -18,6 +19,7 @@ function closePopup(popupName){
 
 // Открыть попап с изображением
 function openCardPopup(evt){
+    document.addEventListener('keydown', handleEscPopupClose);
     openPopup(cardPopup)
 
     cardPopupImage.src = evt.target.closest('.card__image').src
@@ -34,6 +36,7 @@ function handleEscPopupClose(evt) {
             closePopup(openedPopup);
         }
     }
+    document.removeEventListener('keydown', handleEscPopupClose);
 }
 
 // Закрытие попапа на оверлей
