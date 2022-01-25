@@ -15,12 +15,13 @@ function openPopup(popupName){
 function closePopup(popupName){
     popupName.classList.remove('popup_opened')
     popupName.classList.add('popup-smooth-closing') // Добавляем класс, чтобы анимация плавности срабатывала только после открытия попапа
+    document.removeEventListener('keydown', handleEscPopupClose);
 }
 
 // Открыть попап с изображением
 function openCardPopup(evt){
-    document.addEventListener('keydown', handleEscPopupClose);
     openPopup(cardPopup)
+    document.addEventListener('keydown', handleEscPopupClose);
 
     cardPopupImage.src = evt.target.closest('.card__image').src
     cardPopupImage.alt = evt.target.nextElementSibling.textContent
@@ -36,7 +37,6 @@ function handleEscPopupClose(evt) {
             closePopup(openedPopup);
         }
     }
-    document.removeEventListener('keydown', handleEscPopupClose);
 }
 
 // Закрытие попапа на оверлей
