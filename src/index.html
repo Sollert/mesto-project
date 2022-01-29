@@ -13,11 +13,13 @@
   <main class="content page__content">
     <section class="profile">
       <div class="user">
-        <img class="user__avatar" src="<%=require('./images/profile/avatar.jpg')%>" alt="Аватар профиля">
+        <div class="user__avatar-overlay">
+          <img class="user__avatar" src="" alt="Аватар пользователя">
+        </div>
         <div class="user__info">
-          <h1 class="user__name">Жак-Ив Кусто</h1>
+          <h1 class="user__name">Имя пользователя</h1>
           <button class="user__edit-button" type="button" aria-label="Отредактировать"></button>
-          <p class="user__status">Исследователь океана</p>
+          <p class="user__status">Информация о пользователе</p>
         </div>
       </div>
       <button class="profile__add-button" type="button" aria-label="Добавить место"></button>
@@ -27,7 +29,7 @@
   </main>
   <footer class="footer page__footer">
     <h2 class="footer__copyright">
-      &copy;&nbsp;2020 Mesto Russia
+      &copy;&nbsp;2022 Mesto Russia
     </h2>
   </footer>
     <div class="popup page__popup popup_theme_edit-profile" id="popup-edit-profile">
@@ -75,17 +77,36 @@
         <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
       </div>
     </div>
-    
+  <div class="popup page__popup popup_theme_avatar" id="avatar-popup">
+    <div class="popup__container popup__container_theme_avatar">
+        <h2 class="popup__title">
+          Обновить аватар
+        </h2>
+        <form class="form" name="add-avatar" novalidate>
+          <fieldset class="form__fields form__fields_theme_avatar">
+            <input type="url" class="form__element" name="avatarLink" id="avatarLink" placeholder="Ссылка на изображение" required>
+            <span id="error-avatarLink" class="error-message error-message_active"></span>
+          </fieldset>
+          <button type="submit" class="form__save-button">
+            Сохранить
+          </button>
+        </form>
+        <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+      </div>
+  </div>
+  <!--ШАБЛОН КАРТОЧКИ-->
     <template id="card-template">
       <article class="card">
         <img class="card__image">
         <div class="card__info">
           <h2 class="card__name"></h2>
-          <button class="card__like" type="button" aria-label="Нравится"></button>
+          <div class="card__place-like">
+            <button class="card__like" type="button" aria-label="Нравится"></button>
+            <span class="card__like-count"></span>
+          </div>
         </div>
         <button class="card__delete" type="button" aria-label="Удалить"></button>
       </article>
     </template>
-
 </body>
 </html>

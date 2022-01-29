@@ -23,6 +23,7 @@
 
 /* Блок user */
 @import url(../blocks/user/user.css);
+@import url(../blocks/user/__avatar-overlay/user__avatar-overlay.css);
 @import url(../blocks/user/__avatar/user__avatar.css);
 @import url(../blocks/user/__info/user__info.css);
 @import url(../blocks/user/__name/user__name.css);
@@ -38,8 +39,11 @@
 @import url(../blocks/card/__info/card__info.css);
 @import url(../blocks/card/__name/card__name.css);
 @import url(../blocks/card/__like/card__like.css);
+@import url(../blocks/card/__place-like/card__place-like.css);
+@import url(../blocks/card/__like-count/card__like-count.css);
 @import url(../blocks/card/__like/_active/card__like_active.css);
 @import url(../blocks/card/__delete/card__delete.css);
+@import url(../blocks/card/__delete/_disabled/card__delete_disabled.css);
 
 /* Блок footer */
 @import url(../blocks/footer/footer.css);
@@ -48,6 +52,7 @@
 /* Блок popup */
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__container/_theme/popup__container_theme_avatar.css);
 @import url(../blocks/popup/__card-container/popup__card-container.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__description/popup__description.css);
@@ -56,12 +61,14 @@
 @import url(../blocks/popup/_theme/popup_theme_card.css);
 @import url(../blocks/popup/_theme/popup_theme_add-card.css);
 @import url(../blocks/popup/_theme/popup_theme_edit-profile.css);
+@import url(../blocks/popup/_theme/popup_theme_avatar.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 
 /* Блок form */
 @import url(../blocks/form/__element/form__element.css);
 @import url(../blocks/form/__element/_invalid/form__element_invalid.css);
 @import url(../blocks/form/__fields/form__fields.css);
+@import url(../blocks/form/__fields/_theme/form__fields_theme_avatar.css);
 @import url(../blocks/form/__save-button/form__save-button.css);
 @import url(../blocks/form/__save-button/_disabled/form__save-button_disabled.css);
 

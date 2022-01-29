@@ -9,39 +9,15 @@ const userNameInput = formEditProfile.querySelector('[name = username]') // Ин
 const userStatusInput = formEditProfile.querySelector('[name = userstatus]') // Инпут статуса пользователя в форме редактирования профиля
 const userName = profile.querySelector('.user__name') // Имя пользователя
 const userStatus = profile.querySelector('.user__status') // Статус пользователя
+const userAvatar = profile.querySelector('.user__avatar') // Аватар пользователя
+const editProfileSaveButton = popupEditProfile.querySelector('.form__save-button')
 
-const cards = document.querySelector('.cards') // Контейнер карточек
-const initialCards = [
-    {
-        name: 'Мишка',
-        link: 'https://images.unsplash.com/photo-1576076819613-26f8537ae375?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=735&q=80'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Котик',
-        link: 'https://images.unsplash.com/photo-1588418306237-48715b51ede9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80'
-    },
-];
+const cardsContainer = document.querySelector('.cards') // Контейнер карточек
 
 const popupAddCard = document.querySelector('#popup-add-card') // Попап загрузки карточки
 const buttonOpenPopupAddCard = profile.querySelector('.profile__add-button') // Кнопка открыть попап загрузки карточки
 const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close-button') // Кнопка закрыть попап загрузки карточки
-const saveButton = popupAddCard.querySelector('.form__save-button') // Кнопка сохранения
+const addCardSaveButton = popupAddCard.querySelector('.form__save-button') // Кнопка сохранения
 
 const addCardForm = popupAddCard.querySelector('.form') // Форма загрузки карточки
 const cardNameInput = popupAddCard.querySelector('[name = cardname]') // Инпут названия карточки в форме
@@ -51,6 +27,17 @@ const cardPopup = document.querySelector('#card-popup')
 const cardPopupCloseButton = cardPopup.querySelector('.popup__close-button')
 const cardPopupImage = cardPopup.querySelector('.popup__image')
 const cardPopupDescription = cardPopup.querySelector('.popup__description')
+
+const buttonOpenAvatarPopup = profile.querySelector('.user__avatar-overlay')
+const avatarPopup = document.querySelector('#avatar-popup')
+const buttonCloseAvatarPopup = avatarPopup.querySelector('.popup__close-button')
+const avatarLinkInput = avatarPopup.querySelector('.form__element')
+const editAvatarForm = avatarPopup.querySelector('.form')
+const editAvatarSaveButton = editAvatarForm.querySelector('.form__save-button')
+
+const cohortId = 'plus-cohort-6'
+const token = '0e574467-6b7d-4dc4-b2a8-eccc9934d3db'
+
 
 export {
     profile,
@@ -62,8 +49,9 @@ export {
     userStatusInput,
     userName,
     userStatus,
-    cards,
-    initialCards,
+    userAvatar,
+    editProfileSaveButton,
+    cardsContainer,
     popupAddCard,
     buttonOpenPopupAddCard,
     buttonClosePopupAddCard,
@@ -74,5 +62,13 @@ export {
     cardPopupCloseButton,
     cardPopupImage,
     cardPopupDescription,
-    saveButton
+    addCardSaveButton,
+    avatarPopup,
+    buttonOpenAvatarPopup,
+    buttonCloseAvatarPopup,
+    avatarLinkInput,
+    editAvatarForm,
+    editAvatarSaveButton,
+    cohortId,
+    token
 }

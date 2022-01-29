@@ -1,4 +1,6 @@
 .user {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
   width: 282px;
   min-height: 200px;
   display: flex;

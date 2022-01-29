@@ -9,7 +9,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-color: transparent;
-  transition: opacity 1s ease;
+  transition: opacity 0.5s ease;
 }
 
 .card__delete:hover {
