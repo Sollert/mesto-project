@@ -1,14 +1,8 @@
 // ИМПОРТ ИЗ UTIL.JS
 import {
-    userNameInput,
-    userStatusInput,
-    cardNameInput,
-    cardLinkInput,
-    avatarLinkInput,
     cohortId,
     token,
-} from './utils.js'
-import {createCard, renderCard} from "./card";
+} from './constants.js'
 
 // КОНФИГ ДЛЯ ЗАПРОСОВ
 const config = {
@@ -31,7 +25,7 @@ const sendRequest = (url, method, body = null) => {
         headers: config.headers,
         body: body
     })
-        .then(res => getResponseData(res))
+        .then(getResponseData)
 }
 
 // ПОЛУЧИТЬ ИНФОРМАЦИЮ О ЮЗЕРЕ
@@ -45,27 +39,27 @@ const getInitialCards = () => {
 }
 
 // ОБНОВИТЬ ИНФОРМАЦИЮ О ЮЗЕРЕ
-const updateUserInfo = () => {
+const updateUserInfo = (name, about) => {
     const body = JSON.stringify({
-    name: userNameInput.value,
-    about: userStatusInput.value
+    name: name,
+    about: about
     })
     return sendRequest(`users/me`, 'PATCH', body)
 }
 
 // ОБНОВИТЬ АВАТАР ЮЗЕРА
-const updateAvatar = () => {
+const updateAvatar = (avatar) => {
     const body = JSON.stringify({
-        avatar: avatarLinkInput.value
+        avatar: avatar
     })
     return sendRequest(`users/me/avatar`, 'PATCH', body)
 }
 
 // ЗАГРУЗИТЬ КАРТОЧКУ
-const loadCard = () => {
+const loadCard = (name, link) => {
     const body = JSON.stringify({
-        name: cardNameInput.value,
-        link: cardLinkInput.value
+        name: name,
+        link: link
     })
     return sendRequest(`cards`, 'POST', body)
 }

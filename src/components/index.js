@@ -1,10 +1,9 @@
 // ИМПОРТ INDEX.JSS
 import '../pages/index.css'
-// ИМПОРТ UTILS.JS
+// ИМПОРТ CONSTANTS.JS
 import {
     popupEditProfile,
     buttonOpenPopupEditProfile,
-    buttonClosePopupEditProfile,
     formEditProfile,
     userNameInput,
     userStatusInput,
@@ -14,23 +13,20 @@ import {
     cardsContainer,
     popupAddCard,
     buttonOpenPopupAddCard,
-    buttonClosePopupAddCard,
     addCardForm,
-    cardPopup,
-    cardPopupCloseButton,
     userAvatar,
     avatarPopup,
     buttonOpenAvatarPopup,
-    buttonCloseAvatarPopup,
     addCardSaveButton,
     editAvatarSaveButton,
-    editAvatarForm, avatarLinkInput
-} from './utils.js'
+    editAvatarForm,
+    avatarLinkInput,
+    popups
+} from './constants.js'
 // ИМПОРТ MODAL.JS
 import {
   openPopup,
   closePopup,
-  handleOverlayPopupClose,
 } from './modal.js'
 // ИМПОРТ CARDS.JS
 import {
@@ -63,37 +59,6 @@ enableValidation({
   buttonDisabledClass: 'form__save-button_disabled'
 })
 
-// ЗАГРУЗИТЬ НА СТРАНИЦУ ИНФО ЮЗЕРА
-const loadUserInfo = () => {
-  getUserInfo()
-      .then((res) => {
-        userName.textContent = res.name
-        userStatus.textContent = res.about
-      })
-      .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-      })
-}
-
-// ЗАГРУЗИТЬ НА СТРАНИЦУ АВАТАР
-const loadUserAvatar = () => {
-  getUserInfo()
-      .then((res) => {
-          userAvatar.src = res.avatar
-      })
-      .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-      })
-}
-
-// ЗАГРУЗИТЬ НА СТРАНИЦУ КАРТОЧКИ
-const loadCards = (cardsList) => {
-  cardsList.reverse()
-  cardsList.forEach(card => {
-    renderCard(cardsContainer, createCard(card.name, card.link, card.likes, card._id, card.owner._id))
-  })
-}
-
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
 const putUserInfo = () => {
   userNameInput.value = userName.textContent
@@ -105,9 +70,13 @@ const loadAllInfo = () => {
     Promise.all([getUserInfo(), getInitialCards()])
         .then(([user, cardsList]) => {
             userId = user._id
-            loadUserInfo(); // Загрузить информацию о пользователе
-            loadUserAvatar() // Загрузить аватар пользователя
-            loadCards(cardsList) // Загрузить карточки
+            userName.textContent = user.name
+            userStatus.textContent = user.about
+            userAvatar.src = user.avatar
+            cardsList.reverse()
+            cardsList.forEach(card => {
+                renderCard(cardsContainer, createCard(card.name, card.link, card.likes, card._id, card.owner._id))
+            })
         })
         .catch((err) => {
             console.log(`Ошибка: ${err}`);
@@ -115,9 +84,8 @@ const loadAllInfo = () => {
 }
 loadAllInfo()
 
-
 // СЛУШАТЕЛИ
-const listeners = () => {
+const setListeners = () => {
 
     // ДОБАВИТЬ КАРТОЧКУ
     addCardForm.addEventListener('submit', () => {
@@ -128,10 +96,11 @@ const listeners = () => {
     // СОХРАНЯТЬ ДАННЫЕ ИЗ ФОРМЫ РЕДАКТИРОВАНИЯ ПРОФИЛЯ
     formEditProfile.addEventListener('submit', (evt) => {
         editProfileSaveButton.textContent = 'Сохранение...'
-        updateUserInfo()
+        updateUserInfo(userNameInput.value, userStatusInput.value)
             .then((res) => {
                 userName.textContent = userNameInput.value
                 userStatus.textContent = userStatusInput.value
+                closePopup(popupEditProfile)
             })
             .catch((err) => {
                 console.log(`Ошибка: ${err}`)
@@ -139,15 +108,17 @@ const listeners = () => {
             .finally(() => {
                 editProfileSaveButton.textContent = 'Сохранить'
             })
-        closePopup(popupEditProfile)
     })
 
     // СОХРАНЯТЬ ДАННЫЕ ИЗ ФОРМЫ ОБНОВИТЬ АВАТАР
     editAvatarForm.addEventListener('submit', (evt) => {
         editAvatarSaveButton.textContent = 'Сохранение...'
-        updateAvatar()
+        updateAvatar(avatarLinkInput.value)
             .then((res) => {
-                userAvatar.src = loadUserAvatar()
+                userAvatar.src = res.avatar
+                editAvatarForm.reset()
+                closePopup(avatarPopup)
+                disableButton(editAvatarSaveButton, 'form__save-button_disabled')
             })
             .catch((err) => {
                 console.log(`Ошибка: ${err}`)
@@ -155,9 +126,6 @@ const listeners = () => {
             .finally(() => {
                 editAvatarSaveButton.textContent = 'Сохранить'
             })
-        editAvatarForm.reset()
-        closePopup(avatarPopup)
-        disableButton(editAvatarSaveButton, 'form__save-button_disabled')
     })
 
     // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
@@ -172,38 +140,19 @@ const listeners = () => {
     // ОТКРЫТЬ ПОПАП ЗАГРУЗКИ КАРТОЧКИ
     buttonOpenPopupAddCard.addEventListener('click', () => openPopup(popupAddCard))
 
-    // ЗАКРЫТЬ ПОПАП ПРОФИЛЯ
-    // По клику на крестик
-    buttonClosePopupEditProfile.addEventListener('click', function () {
-        closePopup(popupEditProfile)
-        putUserInfo()
+    // ЗАКРЫТЬ ПОПАПЫ
+    popups.forEach((popup) => {
+        popup.addEventListener('mousedown', (evt) => {
+            if (evt.target.classList.contains('popup_opened')) {
+                closePopup(popup)
+            }
+            if (evt.target.classList.contains('popup__close-button')) {
+                closePopup(popup)
+            }
+        })
     })
-    // По клику на оверлей
-    popupEditProfile.addEventListener('mousedown', handleOverlayPopupClose)
-
-    // ЗАКРЫТЬ ПОПАП ЗАГРУЗКИ КАРТОЧКИ
-    // По клику на крестик
-    buttonClosePopupAddCard.addEventListener('click', function () {
-        closePopup(popupAddCard)
-        addCardForm.reset()
-    })
-    // По клику на оверлей
-    popupAddCard.addEventListener('mousedown', handleOverlayPopupClose)
-
-    // ЗАКРЫТЬ ПОПАП С ИЗОБРАЖЕНИЕМ
-    // По клику на крестик
-    cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup))
-    // По клику на оверлей
-    cardPopup.addEventListener('mousedown', handleOverlayPopupClose)
-
-
-    // ЗАКРЫТЬ ПОПАП РЕДКАТИРОВАНИЯ АВАТАРА
-    // По клику на крестик
-    buttonCloseAvatarPopup.addEventListener('click', () => closePopup(avatarPopup))
-    // По клику на оверлей
-    avatarPopup.addEventListener('mousedown', handleOverlayPopupClose)
 }
-listeners()
+setListeners()
 
 // ЭКСПОРТ
 export {

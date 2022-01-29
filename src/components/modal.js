@@ -3,7 +3,7 @@ import {
     cardPopup,
     cardPopupImage,
     cardPopupDescription
-} from './utils.js'
+} from './constants.js'
 
 
 // ОТКРЫТЬ ПОПАП
@@ -30,10 +30,8 @@ const handleOverlayPopupClose = (evt) => {
 // ОТКРЫТЬ ПОПАП ИЗОБРАЖЕНИЯ
 const openCardPopup = (evt) => {
     openPopup(cardPopup)
-
-    cardPopupImage.src = evt.target.closest('.card__image').src
-    cardPopupImage.alt = evt.target.nextElementSibling.textContent
-
+    cardPopupImage.src = evt.target.src
+    cardPopupImage.alt = evt.target.alt
     cardPopupDescription.textContent = evt.target.alt
 }
 

@@ -20,7 +20,9 @@ import {
     cardsContainer,
     popupAddCard,
     addCardSaveButton,
-} from './utils.js'
+    cardNameInput,
+    cardLinkInput
+} from './constants.js'
 // ИМПОРТ ИЗ VALIDATE.JS
 import {
     disableButton
@@ -129,9 +131,12 @@ const renderCard = (container, element) => {
 
 // ДОБАВИТЬ КАРТОЧКУ В КОНТЕЙНЕР
 const addCard = () => {
-    loadCard()
+    loadCard(cardNameInput.value, cardLinkInput.value)
         .then((res) => {
             renderCard(cardsContainer, createCard(res.name, res.link, res.likes, res._id, res.owner._id))
+            closePopup(popupAddCard)
+            addCardForm.reset()
+            disableButton(addCardSaveButton, 'form__save-button_disabled')
         })
         .catch((err) => {
             console.log(`Ошибка: ${err}`)
@@ -139,9 +144,6 @@ const addCard = () => {
         .finally(() => {
             addCardSaveButton.textContent = 'Создать'
         })
-    closePopup(popupAddCard)
-    addCardForm.reset()
-    disableButton(addCardSaveButton, 'form__save-button_disabled')
 }
 
 
