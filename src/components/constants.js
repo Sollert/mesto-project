@@ -33,8 +33,13 @@ const avatarLinkInput = avatarPopup.querySelector('.form__element')
 const editAvatarForm = avatarPopup.querySelector('.form')
 const editAvatarSaveButton = editAvatarForm.querySelector('.form__save-button')
 
-const cohortId = 'plus-cohort-6'
-const token = '0e574467-6b7d-4dc4-b2a8-eccc9934d3db'
+const config = {
+    baseUrl: `https://nomoreparties.co/v1/plus-cohort-6`,
+    headers: {
+        'authorization': '0e574467-6b7d-4dc4-b2a8-eccc9934d3db',
+        'Content-Type': 'application/json'
+    }
+}
 
 
 export {
@@ -64,6 +69,5 @@ export {
     avatarLinkInput,
     editAvatarForm,
     editAvatarSaveButton,
-    cohortId,
-    token
+    config
 }
