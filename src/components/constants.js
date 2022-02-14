@@ -33,7 +33,7 @@ const avatarLinkInput = avatarPopup.querySelector('.form__element')
 const editAvatarForm = avatarPopup.querySelector('.form')
 const editAvatarSaveButton = editAvatarForm.querySelector('.form__save-button')
 
-const config = {
+const configApi = {
     baseUrl: `https://nomoreparties.co/v1/plus-cohort-6`,
     headers: {
         'authorization': '0e574467-6b7d-4dc4-b2a8-eccc9934d3db',
@@ -41,6 +41,15 @@ const config = {
     }
 }
 
+// ВАЛИДАЦИЯ ФОРМ
+const configValidation = {
+  formSelector: '.form',
+  inputSelector: '.form__element',
+  inputInvalidClass: 'form__element_invalid',
+  errorClass: 'error-message_active',
+  buttonSelector: '.form__save-button',
+  buttonDisabledClass: 'form__save-button_disabled'
+}
 
 export {
     profile,
@@ -69,5 +78,6 @@ export {
     avatarLinkInput,
     editAvatarForm,
     editAvatarSaveButton,
-    config
+    configApi,
+    configValidation
 }

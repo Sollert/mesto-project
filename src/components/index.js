@@ -49,15 +49,8 @@ import {
 
 let userId
 
-// ВАЛИДАЦИЯ ФОРМ
-enableValidation({
-  formSelector: '.form',
-  inputSelector: '.form__element',
-  inputInvalidClass: 'form__element_invalid',
-  errorClass: 'error-message_active',
-  buttonSelector: '.form__save-button',
-  buttonDisabledClass: 'form__save-button_disabled'
-})
+
+
 
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
 const putUserInfo = () => {
