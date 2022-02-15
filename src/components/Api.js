@@ -5,7 +5,7 @@ export default class Api {
     }
 
     // ПРОВЕРИТЬ ОТВЕТ
-    _getResponseData() {
+    _getResponseData(res) {
         return res.ok
             ? res.json()
             : Promise.reject(`Ошибка: ${res.status}`)
@@ -13,9 +13,9 @@ export default class Api {
 
     // ОТПРАВИТЬ ЗАПРОС
     _sendRequest(url, method, body = null) {
-        return fetch(`${config.baseUrl}/${url}`, {
+        return fetch(`${this._baseUrl}/${url}`, {
             method: method,
-            headers: config.headers,
+            headers: this._headers,
             body: body
         })
             .then(this._getResponseData)
@@ -69,6 +69,6 @@ export default class Api {
 
     // УБРАТЬ ЛАЙК У КАРТОЧКИ
     removeLikeCard(cardId) {
-        return sendRequest(`cards/likes/${cardId}`, `DELETE`)
+        return this._sendRequest(`cards/likes/${cardId}`, `DELETE`)
     }
 }

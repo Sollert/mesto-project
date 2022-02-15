@@ -1,5 +1,14 @@
 // ИМПОРТ INDEX.JSS
 import '../pages/index.css'
+// ИМПОРТЫ КЛАССОВ
+import Api from './Api.js'
+import Card from './Card.js'
+import Popup from './Popup.js'
+import PopupWithForm from './PopupWithForm.js'
+import PopupWithImage from './PopupWithImage.js'
+import Section from './Section.js'
+import UserInfo from './UserInfo.js'
+import FormValidation from './FormValidation.js'
 // ИМПОРТ CONSTANTS.JS
 import {
     popupEditProfile,
@@ -21,35 +30,39 @@ import {
     editAvatarSaveButton,
     editAvatarForm,
     avatarLinkInput,
-    popups
+    popups,
+    configApi,
+    configValidation
 } from './constants.js'
-// ИМПОРТ MODAL.JS
-import {
-  openPopup,
-  closePopup,
-} from './modal.js'
-// ИМПОРТ CARDS.JS
-import {
-    createCard,
-    renderCard,
-    addCard
-} from './card.js'
-// ИМПОРТ VALIDATE.JS
-import {
-    disableButton,
-    enableValidation
-} from './validate.js'
-// ИМПОРТ API.JS
-import {
-    getUserInfo,
-    getInitialCards,
-    updateUserInfo,
-    updateAvatar
-} from './api.js'
+
+const api = new Api(configApi)
+
+const cardList = new Section({
+    data: [],
+    renderer: (data) => renderCard(data)
+}, '.cards');
+
+const handleCardClick = () => {
+
+}
+
+const handleRemoveCard = () => {
+
+}
 
 let userId
 
+const renderCard = (data) => {
+    const card = new Card({
+        title: data.name,
+        image: data.link,
+        likes: data.likes,
+        cardAuthorId: data.cardAuthorId
+    }, handleCardClick, handleRemoveCard)
 
+    const cardElement = card.generate(userId)
+    cardList.setItem(cardElement)
+}
 
 
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
@@ -60,15 +73,20 @@ const putUserInfo = () => {
 
 // ОТОБРАЗИТЬ ДАННЫЕ С СЕРВЕРА НА СТРАНИЦУ
 const loadAllInfo = () => {
-    Promise.all([getUserInfo(), getInitialCards()])
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
         .then(([user, cardsList]) => {
-            userId = user._id
             userName.textContent = user.name
             userStatus.textContent = user.about
             userAvatar.src = user.avatar
+
             cardsList.reverse()
             cardsList.forEach(card => {
-                renderCard(cardsContainer, createCard(card.name, card.link, card.likes, card._id, card.owner._id))
+                renderCard({
+                    title: card.name,
+                    image: card.link,
+                    likes: card.likes,
+                    cardAuthorId: card.cardAuthorId
+                }, handleCardClick, handleRemoveCard)
             })
         })
         .catch((err) => {

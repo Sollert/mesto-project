@@ -1,12 +1,12 @@
-class Popup {
+export default class Popup {
   constructor(popupSelector) {
-    this._selector = popupSelector;
-    this._popup = document.querySelector(this._selector);
+    this._popup = document.querySelector(popupSelector);
+    this._handleEscPopupClose = handleEscPopupClose
   }
 
   // ОТКРЫТЬ ПОПАП
   openPopup() {
-    document.addEventListener("keydown", handleEscPopupClose);
+    document.addEventListener("keydown", this._handleEscPopupClose);
     this._popup.classList.add("popup_opened");
     this._popup.classList.remove("popup-smooth-closing"); // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
   }
@@ -15,13 +15,13 @@ class Popup {
   closePopup() {
     this._popup.classList.remove("popup_opened");
     this._popup.classList.add("popup-smooth-closing"); // Добавляем класс, чтобы анимация плавности срабатывала только после открытия попапа
-    document.removeEventListener("keydown", handleEscPopupClose);
+    document.removeEventListener("keydown", this._handleEscPopupClose);
   }
 
   // ЗАКРЫТЬ ПОПАП ИЗОБРАЖЕНИЯ
   _handleEscPopupClose(evt) {
     if (evt.key === "Escape" && this._popup.classList.contains("popup_opened")) {
-      this.closePopup(openedPopup);
+      this.closePopup();
     }
   }
 

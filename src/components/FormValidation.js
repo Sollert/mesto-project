@@ -1,4 +1,4 @@
-class FormValidation {
+export default class FormValidation {
     constructor({ obj }, formElement){
         this._formElement = formElement;
         this._configValidation = obj;
