@@ -38,7 +38,6 @@ import {
 const api = new Api(configApi)
 
 const cardList = new Section({
-    data: [],
     renderer: (data) => renderCard(data)
 }, '.cards');
 
