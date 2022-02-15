@@ -54,11 +54,8 @@ let userId
 
 const renderCard = (data) => {
     const card = new Card({
-        title: data.name,
-        image: data.link,
-        likes: data.likes,
-        cardAuthorId: data.cardAuthorId
-    }, handleCardClick, handleRemoveCard)
+        data: data
+    }, '#card-template', handleCardClick, handleRemoveCard)
 
     const cardElement = card.generate(userId)
     cardList.setItem(cardElement)
@@ -82,11 +79,11 @@ const loadAllInfo = () => {
             cardsList.reverse()
             cardsList.forEach(card => {
                 renderCard({
-                    title: card.name,
-                    image: card.link,
+                    name: card.name,
+                    link: card.link,
                     likes: card.likes,
                     cardAuthorId: card.cardAuthorId
-                }, handleCardClick, handleRemoveCard)
+                })
             })
         })
         .catch((err) => {

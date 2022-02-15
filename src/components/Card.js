@@ -4,7 +4,7 @@ export default class Card {
         this._image = data.link
         this._likes = data.likes
         this._cardAuthorId = data.cardAuthorId
-        this._cardSelector = document.querySelector(cardSelector)
+        this._cardSelector = cardSelector
         this._handleCardClick = handleCardClick
         this._handleRemoveCard = handleRemoveCard
     }
@@ -33,17 +33,17 @@ export default class Card {
 
     _setEventListeners(cardImage, likeButton, trash) {
         // СЛУШАТЕЛЬ ДЛЯ ПОПАПА КАРТИНКИ
-        cardImage.addEventListener('click', () => {
-            this._handleCardClick(cardImage)
+        this._element.querySelector('.card__image').addEventListener('click', () => {
+            this._handleCardClick()
         })
 
         // СЛУШАТЕЛЬ ЛАЙКА И ДИЗЛАЙКА
-        likeButton.addEventListener('click', () => {
+        this._element.querySelector('.card__like').addEventListener('click', () => {
             this._toggleLike()
         })
 
         // СЛУШАТЕЛЬ УДАЛЕНИЯ КАРТОЧКИ
-        trash.addEventListener('click', () => {
+        this._element.querySelector('.card__delete').addEventListener('click', () => {
             this._handleRemoveCard()
         })
 
