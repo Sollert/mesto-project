@@ -1,4 +1,4 @@
-// ИМПОРТ INDEX.JSS
+// ИМПОРТ INDEX.CSS
 import '../pages/index.css'
 // ИМПОРТЫ КЛАССОВ
 import Api from './Api.js'
@@ -32,39 +32,58 @@ import {
     avatarLinkInput,
     popups,
     configApi,
-    configValidation
+    configValidation,
+    templateSelector
 } from './constants.js'
 
+let userId = '73716017333b67513d746598' // Сейчас нужен для хардкода, после того как будем доставать юзеринфо удалить
+
+// ОБЪЯВИТЬ ЭКЗЕМПЛЯР АПИ ДЛЯ ВСЕГО
 const api = new Api(configApi)
 
-const cardList = new Section({
-    renderer: (data) => renderCard(data)
-}, '.cards');
-
+// СОБЫТИЯ ДЛЯ КАРТОЧКИ
+// Открыть попап с изображением
 const handleCardClick = () => {
 
 }
 
+// Удалить карточку
 const handleRemoveCard = () => {
 
 }
 
-let userId
+// Лайк
+const addLike = (card, cardId) => {
+    const cardLike = card.querySelector('.card__like')
+    const likeCounter = card.querySelector('.card__like-count')
 
-const renderCard = (data) => {
-    const card = new Card({
-        data: data
-    }, '#card-template', handleCardClick, handleRemoveCard)
-
-    const cardElement = card.generate(userId)
-    cardList.setItem(cardElement)
+    api.addLikeCard(cardId)
+        .then((data) => {
+            cardLike.classList.add('card__like_active')
+            likeCounter.textContent = data.likes.length;
+        })
 }
 
+// Дизлайк
+const removeLike = (card, cardId) => {
+    const cardLike = card.querySelector('.card__like')
+    const likeCounter = card.querySelector('.card__like-count')
 
-// ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
-const putUserInfo = () => {
-  userNameInput.value = userName.textContent
-  userStatusInput.value = userStatus.textContent
+    api.removeLikeCard(cardId)
+        .then((data) => {
+            cardLike.classList.remove('card__like_active')
+            likeCounter.textContent = data.likes.length;
+        })
+}
+
+// ОБЪЯИТЬ ЭКЗЕМПЛЯР SECTION ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК В РАЗМЕТКУ
+const cardList = new Section((data) => renderCard(data), '.cards');
+
+// РЕНДЕР КАРТОЧЕК
+const renderCard = (data) => {
+    const card = new Card(data, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike)
+    const cardElement = card.generate(userId)
+    cardList.setItem(cardElement)
 }
 
 // ОТОБРАЗИТЬ ДАННЫЕ С СЕРВЕРА НА СТРАНИЦУ
@@ -77,12 +96,8 @@ const loadAllInfo = () => {
 
             cardsList.reverse()
             cardsList.forEach(card => {
-                renderCard({
-                    name: card.name,
-                    link: card.link,
-                    likes: card.likes,
-                    cardAuthorId: card.cardAuthorId
-                })
+                renderCard(card)
+                console.log(card)
             })
         })
         .catch((err) => {
@@ -90,6 +105,12 @@ const loadAllInfo = () => {
         })
 }
 loadAllInfo()
+
+// ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
+const putUserInfo = () => {
+    userNameInput.value = userName.textContent
+    userStatusInput.value = userStatus.textContent
+}
 
 // СЛУШАТЕЛИ
 const setListeners = () => {

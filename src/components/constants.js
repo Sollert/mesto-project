@@ -33,6 +33,8 @@ const avatarLinkInput = avatarPopup.querySelector('.form__element')
 const editAvatarForm = avatarPopup.querySelector('.form')
 const editAvatarSaveButton = editAvatarForm.querySelector('.form__save-button')
 
+const templateSelector = document.querySelector('#card-template')
+
 const configApi = {
     baseUrl: `https://nomoreparties.co/v1/plus-cohort-6`,
     headers: {
@@ -79,5 +81,6 @@ export {
     editAvatarForm,
     editAvatarSaveButton,
     configApi,
-    configValidation
+    configValidation,
+    templateSelector
 }

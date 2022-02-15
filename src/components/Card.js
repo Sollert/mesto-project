@@ -1,5 +1,6 @@
 export default class Card {
-    constructor({data}, cardSelector, handleCardClick, handleRemoveCard) {
+    constructor(data, cardSelector, handleCardClick, handleRemoveCard, addLike, removeLike) {
+        this._id = data._id
         this._title = data.name
         this._image = data.link
         this._likes = data.likes
@@ -7,71 +8,74 @@ export default class Card {
         this._cardSelector = cardSelector
         this._handleCardClick = handleCardClick
         this._handleRemoveCard = handleRemoveCard
+        this._addLike = addLike
+        this._removeLike = removeLike
     }
 
+    // Получаем разметку
     _getTemplate() {
-        const cardElement = document
-            .querySelector(this._cardSelector)
-            .content
-            .querySelector('.card')
-            .cloneNode(true)
-
+        const cardElement = this._cardSelector.content.querySelector('.card').cloneNode(true)
         return cardElement
     }
 
-    _toggleLike() {
+    // Устанавливаем слушатели
+    _setEventListeners(userId) {
+        // Переменные
+        const image = this._element.querySelector('.card__image')
+        const trash = this._element.querySelector('.card__delete')
         const cardLike = this._element.querySelector('.card__like')
 
-        if (cardLike.classList.contains('.card__like_active')) {
-            cardLike.classList.remove('card__like_active')
-            cardLike.textContent = this._likes.length;
-        } else {
-            cardLike.classList.remove('card__like_active')
-            cardLike.textContent = this._likes.length;
-        }
-    }
-
-    _setEventListeners(cardImage, likeButton, trash) {
-        // СЛУШАТЕЛЬ ДЛЯ ПОПАПА КАРТИНКИ
-        this._element.querySelector('.card__image').addEventListener('click', () => {
-            this._handleCardClick()
+        // Слушатель для попапа изображения
+        image.addEventListener('click', () => {
+            this._handleCardClick(this._element)
         })
 
-        // СЛУШАТЕЛЬ ЛАЙКА И ДИЗЛАЙКА
-        this._element.querySelector('.card__like').addEventListener('click', () => {
-            this._toggleLike()
+        // Слушатель для лайка
+        cardLike.addEventListener('click', () => {
+            cardLike.classList.contains('card__like_active')
+                ? this._removeLike(this._element, this._id)
+                : this._addLike(this._element, this._id)
         })
 
-        // СЛУШАТЕЛЬ УДАЛЕНИЯ КАРТОЧКИ
-        this._element.querySelector('.card__delete').addEventListener('click', () => {
-            this._handleRemoveCard()
+        // Слушатель для удаления
+        trash.addEventListener('click', () => {
+            this._handleRemoveCard(this._element)
         })
 
     }
 
+    // Генерируем карточку
     generate(userId) {
+        // Переменные
+        this._element = this._getTemplate()
+        const title = this._element.querySelector('.card__name')
+        const image = this._element.querySelector('.card__image')
+        const likeCounter = this._element.querySelector('.card__like-count')
+        const trash = this._element.querySelector('.card__delete')
+        const cardLike = this._element.querySelector('.card__like')
 
-        this._element = this._getTemplate();
+        // Подставить данные в карточку
+        title.textContent = this._title
+        image.src = this._image
+        image.alt = this._title
+        likeCounter.textContent = this._likes.length
 
-        this._setEventListeners()
-
-        this._element.querySelector('.card__name').textContent = this._title
-        this._element.querySelector('.card__image').src = this._image
-        this._element.querySelector('.card__image').alt = this._title
-        this._element.querySelector('.card__like-count').textContent = this._likes.length
-
+        // Проверить своя ли карточка и убрать корзину если нет
         if (this._cardAuthorId !== userId) {
-            this._element.querySelector('.card__delete').classList.add('card__delete_disabled')
+            trash.classList.add('card__delete_disabled')
         }
 
+        // Проверить поставлен ли лайк карточке
         this._likes.forEach((like) => {
-            if (like._id === userId) {
-                this._element.querySelector('.card__like').classList.add('card__like_active')
-            } else {
-                this._element.querySelector('.card__like').classList.remove('card__like_active')
-            }
+            like._id === userId
+                ? cardLike.classList.add('card__like_active')
+                : cardLike.classList.remove('card__like_active')
         })
 
+        // Добавить слушатели
+        this._setEventListeners(userId)
+
+        // Возвращаем карточку
         return this._element
     }
 }
