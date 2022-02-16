@@ -1,15 +1,15 @@
 export default class Card {
-    constructor(data, cardSelector, handleCardClick, handleRemoveCard, addLike, removeLike) {
+    constructor(data, cardSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner) {
         this._id = data._id
         this._title = data.name
         this._image = data.link
         this._likes = data.likes
-        this._cardAuthorId = data.cardAuthorId
         this._cardSelector = cardSelector
         this._handleCardClick = handleCardClick
         this._handleRemoveCard = handleRemoveCard
         this._addLike = addLike
         this._removeLike = removeLike
+        this._isOwner = isOwner
     }
 
     // Получаем разметку
@@ -45,7 +45,7 @@ export default class Card {
     }
 
     // Генерируем карточку
-    generate(userId) {
+    generate() {
         // Переменные
         this._element = this._getTemplate()
         const title = this._element.querySelector('.card__name')
@@ -61,7 +61,7 @@ export default class Card {
         likeCounter.textContent = this._likes.length
 
         // Проверить своя ли карточка и убрать корзину если нет
-        if (this._cardAuthorId !== userId) {
+        if (!this._isOwner) {
             trash.classList.add('card__delete_disabled')
         }
 
@@ -73,7 +73,7 @@ export default class Card {
         })
 
         // Добавить слушатели
-        this._setEventListeners(userId)
+        this._setEventListeners()
 
         // Возвращаем карточку
         return this._element

@@ -12,8 +12,6 @@ import FormValidation from "./FormValidation.js";
 // ИМПОРТ CONSTANTS.JS
 import { popupEditProfile, buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "./constants.js";
 
-let userId = "73716017333b67513d746598"; // Сейчас нужен для хардкода, после того как будем доставать юзеринфо удалить
-
 // ОБЪЯВИТЬ ЭКЗЕМПЛЯР АПИ ДЛЯ ВСЕГО
 const api = new Api(configApi);
 
@@ -22,7 +20,9 @@ const api = new Api(configApi);
 const handleCardClick = () => {};
 
 // Удалить карточку
-const handleRemoveCard = () => {};
+const handleRemoveCard = () => {
+
+};
 
 // Лайк
 const addLike = (card, cardId) => {
@@ -51,23 +51,29 @@ const cardList = new Section((data) => renderCard(data), ".cards");
 
 // РЕНДЕР КАРТОЧЕК
 const renderCard = (data) => {
-  const card = new Card(data, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike);
-  const cardElement = card.generate(userId);
+  const isOwner = checkIsOwner(data)
+  const card = new Card(data, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner);
+  const cardElement = card.generate();
   cardList.setItem(cardElement);
 };
+
+// ПРОВЕРИТЬ ВЛАДЕЛЬЦА КАРТОЧКИ
+const checkIsOwner = (card) => {
+  return userInfo.getUserId() === card.owner._id
+}
+
+// ЭКЗЕМПЛЯР ЮЗЕРИНФО
+const userInfo = new UserInfo('.user__name','.user__status', '.user__avatar')
 
 // ОТОБРАЗИТЬ ДАННЫЕ С СЕРВЕРА НА СТРАНИЦУ
 const loadAllInfo = () => {
   Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(([user, cardsList]) => {
-      userName.textContent = user.name;
-      userStatus.textContent = user.about;
-      userAvatar.src = user.avatar;
-
+      userInfo.id = user._id
+      userInfo.setUserInfo(user)
       cardsList.reverse();
       cardsList.forEach((card) => {
         renderCard(card);
-        console.log(card);
       });
     })
     .catch((err) => {
@@ -161,6 +167,3 @@ const enableVlidation = () => {
 };
 
 enableVlidation();
-
-// ЭКСПОРТ
-export { userId };
