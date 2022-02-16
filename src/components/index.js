@@ -10,7 +10,7 @@ import Section from "./Section.js";
 import UserInfo from "./UserInfo.js";
 import FormValidation from "./FormValidation.js";
 // ИМПОРТ CONSTANTS.JS
-import { popupEditProfile, buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "./constants.js";
+import { buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "./constants.js";
 
 // ОБЪЯВИТЬ ЭКЗЕМПЛЯР АПИ ДЛЯ ВСЕГО
 const api = new Api(configApi);
@@ -20,9 +20,7 @@ const api = new Api(configApi);
 const handleCardClick = () => {};
 
 // Удалить карточку
-const handleRemoveCard = () => {
-
-};
+const handleRemoveCard = () => {};
 
 // Лайк
 const addLike = (card, cardId) => {
@@ -51,26 +49,31 @@ const cardList = new Section((data) => renderCard(data), ".cards");
 
 // РЕНДЕР КАРТОЧЕК
 const renderCard = (data) => {
-  const isOwner = checkIsOwner(data)
-  const card = new Card(data, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner);
+  const isOwner = checkIsOwner(data);
+  const isLiked = checkIsLiked(data.likes);
+  const card = new Card(data, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked);
   const cardElement = card.generate();
   cardList.setItem(cardElement);
 };
 
 // ПРОВЕРИТЬ ВЛАДЕЛЬЦА КАРТОЧКИ
 const checkIsOwner = (card) => {
-  return userInfo.getUserId() === card.owner._id
-}
+  return userInfo.getUserId() === card.owner._id;
+};
+
+const checkIsLiked = (likes) => {
+  return likes.some((like) => like.owner._id === userInfo.getUserId());
+};
 
 // ЭКЗЕМПЛЯР ЮЗЕРИНФО
-const userInfo = new UserInfo('.user__name','.user__status', '.user__avatar')
+const userInfo = new UserInfo(".user__name", ".user__status", ".user__avatar");
 
 // ОТОБРАЗИТЬ ДАННЫЕ С СЕРВЕРА НА СТРАНИЦУ
 const loadAllInfo = () => {
   Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(([user, cardsList]) => {
-      userInfo.id = user._id
-      userInfo.setUserInfo(user)
+      userInfo.id = user._id;
+      userInfo.setUserInfo(user);
       cardsList.reverse();
       cardsList.forEach((card) => {
         renderCard(card);
@@ -103,7 +106,7 @@ const setListeners = () => {
       .then((res) => {
         userName.textContent = userNameInput.value;
         userStatus.textContent = userStatusInput.value;
-        closePopup(popupEditProfile);
+        //closePopup(popupEditProfile);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -132,10 +135,10 @@ const setListeners = () => {
   });
 
   // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
-  buttonOpenPopupEditProfile.addEventListener("click", () => {
-    openPopup(popupEditProfile);
-    putUserInfo();
-  });
+  //buttonOpenPopupEditProfile.addEventListener("click", () => {
+  //  openPopup(popupEditProfile);
+  //  putUserInfo();
+  //});
 
   // ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
   buttonOpenAvatarPopup.addEventListener("click", () => openPopup(avatarPopup));
@@ -167,3 +170,9 @@ const enableVlidation = () => {
 };
 
 enableVlidation();
+
+const popupEditProfile = new PopupWithForm("#popup-edit-profile", submitEditProfile);
+
+const submitEditProfile = (data) => {
+  console.log(data);
+};

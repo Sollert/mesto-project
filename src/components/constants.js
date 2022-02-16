@@ -53,4 +53,4 @@ const configValidation = {
   buttonDisabledClass: "form__save-button_disabled",
 };
 
-export { profile, popupEditProfile, popups, buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, userAvatar, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, cardNameInput, cardLinkInput, cardPopup, cardPopupImage, cardPopupDescription, addCardSaveButton, avatarPopup, buttonOpenAvatarPopup, avatarLinkInput, editAvatarForm, editAvatarSaveButton, configApi, configValidation, templateSelector };
+export { profile, popups, buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, userAvatar, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, cardNameInput, cardLinkInput, cardPopup, cardPopupImage, cardPopupDescription, addCardSaveButton, avatarPopup, buttonOpenAvatarPopup, avatarLinkInput, editAvatarForm, editAvatarSaveButton, configApi, configValidation, templateSelector };
