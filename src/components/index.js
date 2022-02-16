@@ -41,8 +41,12 @@ const removeLike = (card, cardId) => {
   api.removeLikeCard(cardId).then((data) => {
     cardLike.classList.remove("card__like_active");
     likeCounter.textContent = data.likes.length;
+    card.isLiked = !card.isLiked
   });
 };
+
+// ЭКЗЕМПЛЯР ЮЗЕРИНФО
+const userInfo = new UserInfo(".user__name", ".user__status", ".user__avatar");
 
 // ОБЪЯИТЬ ЭКЗЕМПЛЯР SECTION ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК В РАЗМЕТКУ
 const cardList = new Section((data) => renderCard(data), ".cards");
@@ -62,11 +66,8 @@ const checkIsOwner = (card) => {
 };
 
 const checkIsLiked = (likes) => {
-  return likes.some((like) => like.owner._id === userInfo.getUserId());
+  return likes.some((like) => like._id === userInfo.getUserId());
 };
-
-// ЭКЗЕМПЛЯР ЮЗЕРИНФО
-const userInfo = new UserInfo(".user__name", ".user__status", ".user__avatar");
 
 // ОТОБРАЗИТЬ ДАННЫЕ С СЕРВЕРА НА СТРАНИЦУ
 const loadAllInfo = () => {
@@ -74,6 +75,7 @@ const loadAllInfo = () => {
     .then(([user, cardsList]) => {
       userInfo.id = user._id;
       userInfo.setUserInfo(user);
+      console.log(userInfo)
       cardsList.reverse();
       cardsList.forEach((card) => {
         renderCard(card);

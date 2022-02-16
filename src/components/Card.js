@@ -11,7 +11,6 @@ export default class Card {
     this._removeLike = removeLike;
     this._isOwner = isOwner;
     this._isLiked = isLiked;
-    console.log(this._isLiked);
   }
 
   // Получаем разметку

@@ -6,7 +6,7 @@ export default class UserInfo {
     }
 
     getUserId() {
-        return this._id
+        return this.id
     }
 
     getUserInfo() {
