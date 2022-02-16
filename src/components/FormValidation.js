@@ -4,24 +4,27 @@ export default class FormValidation {
     this._configValidation = obj;
   }
 
-  _showInputError(inputElement, inputInvalidClass, errorElement, errorClass, errorMessage) {
-    inputElement.classList.add(inputInvalidClass);
-    errorElement.classList.add(errorClass);
+  // ПОКАЗАТЬ ОШИБКИ
+  _showInputError(inputElement, errorElement, errorMessage, settings) {
+    inputElement.classList.add(settings.inputInvalidClass);
+    errorElement.classList.add(settings.errorClass);
     errorElement.textContent = errorMessage;
   }
 
-  _hideInputError(inputElement, inputInvalidClass, errorElement, errorClass) {
-    inputElement.classList.remove(inputInvalidClass);
-    errorElement.classList.remove(errorClass);
+  // СКРЫТЬ ОШИБКИ
+  _hideInputError(inputElement, errorElement, settings) {
+    inputElement.classList.remove(settings.inputInvalidClass);
+    errorElement.classList.remove(settings.errorClass);
     errorElement.textContent = "";
   }
 
-  _checkInputValidity(formElement, inputElement, inputInvalidClass, errorClass) {
+  // ВАЛИДАЦИЯ
+  _checkInputValidity(formElement, inputElement, settings) {
     const errorElement = formElement.querySelector(`#error-${inputElement.id}`);
     if (inputElement.validity.valid) {
-      hideInputError(inputElement, inputInvalidClass, errorElement, errorClass);
+      this._hideInputError(inputElement, errorElement, settings);
     } else {
-      showInputError(inputElement, inputInvalidClass, errorElement, errorClass, inputElement.validationMessage);
+      this._showInputError(inputElement, errorElement, inputElement.validationMessage, settings);
     }
   }
 
