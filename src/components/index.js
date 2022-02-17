@@ -23,27 +23,28 @@ const handleCardClick = () => {};
 const handleRemoveCard = () => {};
 
 // Лайк
-const addLike = (card, cardId) => {
+
+const toggleLike = (card, data) => {
   const cardLike = card.querySelector(".card__like");
   const likeCounter = card.querySelector(".card__like-count");
-
+  cardLike.classList.toggle("card__like_active");
+  likeCounter.textContent = data.likes.length;
+  card.isLiked = !card.isLiked;
+}
+const addLike = (card, cardId) => {
   api.addLikeCard(cardId).then((data) => {
-    cardLike.classList.add("card__like_active");
-    likeCounter.textContent = data.likes.length;
+    toggleLike(card, data);
   });
 };
 
 // Дизлайк
 const removeLike = (card, cardId) => {
-  const cardLike = card.querySelector(".card__like");
-  const likeCounter = card.querySelector(".card__like-count");
-
   api.removeLikeCard(cardId).then((data) => {
-    cardLike.classList.remove("card__like_active");
-    likeCounter.textContent = data.likes.length;
-    card.isLiked = !card.isLiked
+    toggleLike(card, data);
   });
 };
+
+
 
 // ЭКЗЕМПЛЯР ЮЗЕРИНФО
 const userInfo = new UserInfo(".user__name", ".user__status", ".user__avatar");
