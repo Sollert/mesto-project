@@ -76,7 +76,6 @@ const loadAllInfo = () => {
     .then(([user, cardsList]) => {
       userInfo.id = user._id;
       userInfo.setUserInfo(user);
-      console.log(userInfo);
       cardsList.reverse();
       cardsList.forEach((card) => {
         renderCard(card);
@@ -87,12 +86,6 @@ const loadAllInfo = () => {
     });
 };
 loadAllInfo();
-
-// ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
-// const putUserInfo = () => {
-//   userNameInput.value = userName.textContent;
-//   userStatusInput.value = userStatus.textContent;
-// };
 
 // СЛУШАТЕЛИ
 // const setListeners = () => {
@@ -171,10 +164,6 @@ const enableVlidation = () => {
 
 enableVlidation();
 
-const submitEditProfile = (data) => {
-  console.log(data);
-};
-
 //Popup With Image
 const popupWithImg = new PopupWithImage("#card-popup", ".popup__image", ".popup__description");
 popupWithImg.setEventListeners();
@@ -202,7 +191,6 @@ popupWithAvatar.setEventListeners();
 
 //Popup Edit Profile
 const handlePopupWithProfile = (object) => {
-  console.log(object)
   popupEditProfile.button.textContent = "Сохранение...";
   api.updateUserInfo(object.username, object.userstatus)
       .then((res) => {
@@ -230,11 +218,10 @@ buttonOpenAvatarPopup.addEventListener("click", () => {
    popupEditProfile.openPopup();
    putUserInfo();
   });
-  
+// ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
   const putUserInfo = () => {
     userNameInput.value = userInfo.getUserInfo().userName;
     userStatusInput.value = userInfo.getUserInfo().userStatus;
     popupEditProfile.button.removeAttribute('disabled');
     popupEditProfile.button.classList.remove('form__save-button_disabled');
-    console.log(userInfo.getUserInfo());
 }
