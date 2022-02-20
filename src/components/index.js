@@ -10,7 +10,7 @@ import Section from "./Section.js";
 import UserInfo from "./UserInfo.js";
 import FormValidation from "./FormValidation.js";
 // ИМПОРТ CONSTANTS.JS
-import { buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "./constants.js";
+import {userNameInput, userStatusInput, userName, userStatus, buttonOpenPopupEditProfile, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "./constants.js";
 
 // ОБЪЯВИТЬ ЭКЗЕМПЛЯР АПИ ДЛЯ ВСЕГО
 const api = new Api(configApi);
@@ -171,8 +171,6 @@ const enableVlidation = () => {
 
 enableVlidation();
 
-const popupEditProfile = new PopupWithForm("#popup-edit-profile", submitEditProfile);
-
 const submitEditProfile = (data) => {
   console.log(data);
 };
@@ -183,8 +181,8 @@ popupWithImg.setEventListeners();
 
 //Popup with avatar
 
-const handlePopupWithForm = (object) => {
-  editAvatarSaveButton.textContent = "Сохранение...";
+const handlePopupWithAvatar = (object) => {
+  popupWithAvatar.button.textContent = "Сохранение...";
   api
     .updateAvatar(object.avatarLink)
     .then((res) => {
@@ -195,14 +193,40 @@ const handlePopupWithForm = (object) => {
       console.log(`Ошибка: ${err}`);
     })
     .finally(() => {
-      editAvatarSaveButton.textContent = "Сохранить";
+      popupWithAvatar.button.textContent = "Сохранить";
     });
 };
 
-const popupWithAvatar = new PopupWithForm("#avatar-popup", handlePopupWithForm);
+const popupWithAvatar = new PopupWithForm("#avatar-popup", handlePopupWithAvatar);
 popupWithAvatar.setEventListeners();
+
+//Popup Edit Profile
+const handlePopupWithProfile = (object) => {
+  console.log(object)
+  popupEditProfile.button.textContent = "Сохранение...";
+  api.updateUserInfo(object.username, object.userstatus)
+      .then((res) => {
+        userName.textContent = res.name;
+        userStatus.textContent = res.about;
+        popupEditProfile.closePopup();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        popupEditProfile.button.textContent = "Сохранить";
+      });
+}
+const popupEditProfile = new PopupWithForm('#popup-edit-profile', handlePopupWithProfile);
+popupEditProfile.setEventListeners();
 
 // ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
 buttonOpenAvatarPopup.addEventListener("click", () => {
   popupWithAvatar.openPopup();
 });
+
+// ОТКРЫТЬ ПОПАП ПРОФИЛЯ
+  buttonOpenPopupEditProfile.addEventListener("click", () => {
+   popupEditProfile.openPopup();
+   // putUserInfo();
+  });
