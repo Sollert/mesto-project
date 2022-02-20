@@ -17,7 +17,9 @@ const api = new Api(configApi);
 
 // СОБЫТИЯ ДЛЯ КАРТОЧКИ
 // Открыть попап с изображением
-const handleCardClick = () => {};
+const handleCardClick = (link, desription) => {
+  popupWithImg.openPopup(link, desription);
+};
 
 // Удалить карточку
 const handleRemoveCard = () => {};
@@ -179,3 +181,8 @@ const popupEditProfile = new PopupWithForm("#popup-edit-profile", submitEditProf
 const submitEditProfile = (data) => {
   console.log(data);
 };
+
+//Popup With Image
+const popupWithImg = new PopupWithImage("#card-popup", ".popup__image", ".popup__description");
+console.log(popupWithImg);
+popupWithImg.setEventListeners();
