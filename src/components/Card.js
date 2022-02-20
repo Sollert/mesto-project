@@ -28,7 +28,7 @@ export default class Card {
 
     // Слушатель для попапа изображения
     image.addEventListener("click", () => {
-      this._handleCardClick(this._element);
+      this._handleCardClick(this._image, this._title);
     });
 
     // Слушатель для лайка
