@@ -160,9 +160,6 @@ const putUserInfo = () => {
 // };
 // setListeners();
 
-// ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
-buttonOpenAvatarPopup.addEventListener("click", popupWithAvatar.openPopup);
-
 //Валидация
 const enableVlidation = () => {
   const validation = new FormValidation({ obj: configValidation }, popups);
@@ -186,7 +183,26 @@ popupWithImg.setEventListeners();
 
 //Popup with avatar
 
-const handlePopupWithForm = () => {};
+const handlePopupWithForm = (object) => {
+  editAvatarSaveButton.textContent = "Сохранение...";
+  api
+    .updateAvatar(object.avatarLink)
+    .then((res) => {
+      userAvatar.src = res.avatar;
+      popupWithAvatar.closePopup();
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    })
+    .finally(() => {
+      editAvatarSaveButton.textContent = "Сохранить";
+    });
+};
 
 const popupWithAvatar = new PopupWithForm("#avatar-popup", handlePopupWithForm);
-console.log(popupWithAvatar);
+popupWithAvatar.setEventListeners();
+
+// ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
+buttonOpenAvatarPopup.addEventListener("click", () => {
+  popupWithAvatar.openPopup();
+});
