@@ -32,7 +32,7 @@ const toggleLike = (card, data) => {
   cardLike.classList.toggle("card__like_active");
   likeCounter.textContent = data.likes.length;
   card.isLiked = !card.isLiked;
-}
+};
 const addLike = (card, cardId) => {
   api.addLikeCard(cardId).then((data) => {
     toggleLike(card, data);
@@ -45,8 +45,6 @@ const removeLike = (card, cardId) => {
     toggleLike(card, data);
   });
 };
-
-
 
 // ЭКЗЕМПЛЯР ЮЗЕРИНФО
 const userInfo = new UserInfo(".user__name", ".user__status", ".user__avatar");
@@ -78,7 +76,7 @@ const loadAllInfo = () => {
     .then(([user, cardsList]) => {
       userInfo.id = user._id;
       userInfo.setUserInfo(user);
-      console.log(userInfo)
+      console.log(userInfo);
       cardsList.reverse();
       cardsList.forEach((card) => {
         renderCard(card);
@@ -97,73 +95,73 @@ const putUserInfo = () => {
 };
 
 // СЛУШАТЕЛИ
-const setListeners = () => {
-  // ДОБАВИТЬ КАРТОЧКУ
-  addCardForm.addEventListener("submit", () => {
-    addCardSaveButton.textContent = "Сохранение...";
-    addCard();
-  });
+// const setListeners = () => {
+//   // ДОБАВИТЬ КАРТОЧКУ
+//   addCardForm.addEventListener("submit", () => {
+//     addCardSaveButton.textContent = "Сохранение...";
+//     addCard();
+//   });
 
-  // СОХРАНЯТЬ ДАННЫЕ ИЗ ФОРМЫ РЕДАКТИРОВАНИЯ ПРОФИЛЯ
-  formEditProfile.addEventListener("submit", (evt) => {
-    editProfileSaveButton.textContent = "Сохранение...";
-    updateUserInfo(userNameInput.value, userStatusInput.value)
-      .then((res) => {
-        userName.textContent = userNameInput.value;
-        userStatus.textContent = userStatusInput.value;
-        //closePopup(popupEditProfile);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        editProfileSaveButton.textContent = "Сохранить";
-      });
-  });
+//   // СОХРАНЯТЬ ДАННЫЕ ИЗ ФОРМЫ РЕДАКТИРОВАНИЯ ПРОФИЛЯ
+//   formEditProfile.addEventListener("submit", (evt) => {
+//     editProfileSaveButton.textContent = "Сохранение...";
+//     updateUserInfo(userNameInput.value, userStatusInput.value)
+//       .then((res) => {
+//         userName.textContent = userNameInput.value;
+//         userStatus.textContent = userStatusInput.value;
+//         //closePopup(popupEditProfile);
+//       })
+//       .catch((err) => {
+//         console.log(`Ошибка: ${err}`);
+//       })
+//       .finally(() => {
+//         editProfileSaveButton.textContent = "Сохранить";
+//       });
+//   });
 
-  // СОХРАНЯТЬ ДАННЫЕ ИЗ ФОРМЫ ОБНОВИТЬ АВАТАР
-  editAvatarForm.addEventListener("submit", (evt) => {
-    editAvatarSaveButton.textContent = "Сохранение...";
-    updateAvatar(avatarLinkInput.value)
-      .then((res) => {
-        userAvatar.src = res.avatar;
-        editAvatarForm.reset();
-        closePopup(avatarPopup);
-        disableButton(editAvatarSaveButton, "form__save-button_disabled");
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        editAvatarSaveButton.textContent = "Сохранить";
-      });
-  });
+//   // СОХРАНЯТЬ ДАННЫЕ ИЗ ФОРМЫ ОБНОВИТЬ АВАТАР
+//   editAvatarForm.addEventListener("submit", (evt) => {
+//     editAvatarSaveButton.textContent = "Сохранение...";
+//     updateAvatar(avatarLinkInput.value)
+//       .then((res) => {
+//         userAvatar.src = res.avatar;
+//         editAvatarForm.reset();
+//         closePopup(avatarPopup);
+//         disableButton(editAvatarSaveButton, "form__save-button_disabled");
+//       })
+//       .catch((err) => {
+//         console.log(`Ошибка: ${err}`);
+//       })
+//       .finally(() => {
+//         editAvatarSaveButton.textContent = "Сохранить";
+//       });
+//   });
 
-  // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
-  //buttonOpenPopupEditProfile.addEventListener("click", () => {
-  //  openPopup(popupEditProfile);
-  //  putUserInfo();
-  //});
+//   // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
+//   //buttonOpenPopupEditProfile.addEventListener("click", () => {
+//   //  openPopup(popupEditProfile);
+//   //  putUserInfo();
+//   //});
 
-  // ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
-  buttonOpenAvatarPopup.addEventListener("click", () => openPopup(avatarPopup));
+//   // ОТКРЫТЬ ПОПАП ЗАГРУЗКИ КАРТОЧКИ
+//   buttonOpenPopupAddCard.addEventListener("click", () => openPopup(popupAddCard));
 
-  // ОТКРЫТЬ ПОПАП ЗАГРУЗКИ КАРТОЧКИ
-  buttonOpenPopupAddCard.addEventListener("click", () => openPopup(popupAddCard));
+//   // ЗАКРЫТЬ ПОПАПЫ
+//   popups.forEach((popup) => {
+//     popup.addEventListener("mousedown", (evt) => {
+//       if (evt.target.classList.contains("popup_opened")) {
+//         closePopup(popup);
+//       }
+//       if (evt.target.classList.contains("popup__close-button")) {
+//         closePopup(popup);
+//       }
+//     });
+//   });
+// };
+// setListeners();
 
-  // ЗАКРЫТЬ ПОПАПЫ
-  popups.forEach((popup) => {
-    popup.addEventListener("mousedown", (evt) => {
-      if (evt.target.classList.contains("popup_opened")) {
-        closePopup(popup);
-      }
-      if (evt.target.classList.contains("popup__close-button")) {
-        closePopup(popup);
-      }
-    });
-  });
-};
-setListeners();
+// ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
+buttonOpenAvatarPopup.addEventListener("click", popupWithAvatar.openPopup);
 
 //Валидация
 const enableVlidation = () => {
@@ -184,5 +182,11 @@ const submitEditProfile = (data) => {
 
 //Popup With Image
 const popupWithImg = new PopupWithImage("#card-popup", ".popup__image", ".popup__description");
-console.log(popupWithImg);
 popupWithImg.setEventListeners();
+
+//Popup with avatar
+
+const handlePopupWithForm = () => {};
+
+const popupWithAvatar = new PopupWithForm("#avatar-popup", handlePopupWithForm);
+console.log(popupWithAvatar);
