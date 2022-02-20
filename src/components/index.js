@@ -89,10 +89,10 @@ const loadAllInfo = () => {
 loadAllInfo();
 
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
-const putUserInfo = () => {
-  userNameInput.value = userName.textContent;
-  userStatusInput.value = userStatus.textContent;
-};
+// const putUserInfo = () => {
+//   userNameInput.value = userName.textContent;
+//   userStatusInput.value = userStatus.textContent;
+// };
 
 // СЛУШАТЕЛИ
 // const setListeners = () => {
@@ -228,5 +228,13 @@ buttonOpenAvatarPopup.addEventListener("click", () => {
 // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
   buttonOpenPopupEditProfile.addEventListener("click", () => {
    popupEditProfile.openPopup();
-   // putUserInfo();
+   putUserInfo();
   });
+  
+  const putUserInfo = () => {
+    userNameInput.value = userInfo.getUserInfo().userName;
+    userStatusInput.value = userInfo.getUserInfo().userStatus;
+    popupEditProfile.button.removeAttribute('disabled');
+    popupEditProfile.button.classList.remove('form__save-button_disabled');
+    console.log(userInfo.getUserInfo());
+}
