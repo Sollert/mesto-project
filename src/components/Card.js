@@ -1,6 +1,6 @@
 export default class Card {
   constructor(data, cardSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked) {
-    this._id = data._id;
+    this.id = data._id;
     this._title = data.name;
     this._image = data.link;
     this._likes = data.likes;
@@ -10,7 +10,7 @@ export default class Card {
     this._addLike = addLike;
     this._removeLike = removeLike;
     this._isOwner = isOwner;
-    this._isLiked = isLiked;
+    this.isLiked = isLiked;
   }
 
   // Получаем разметку
@@ -20,58 +20,53 @@ export default class Card {
   }
 
   // Устанавливаем слушатели
-  _setEventListeners(userId) {
-    // Переменные
-    const image = this._element.querySelector(".card__image");
-    const trash = this._element.querySelector(".card__delete");
-    const cardLike = this._element.querySelector(".card__like");
-
+  _setEventListeners() {
     // Слушатель для попапа изображения
-    image.addEventListener("click", () => {
+    this.imageEl.addEventListener("click", () => {
       this._handleCardClick(this._image, this._title);
     });
 
     // Слушатель для лайка
-    cardLike.addEventListener("click", () => {
-      cardLike.classList.contains("card__like_active") ? this._removeLike(this._element, this._id) : this._addLike(this._element, this._id);
+    this.cardLikeEl.addEventListener("click", () => {
+      this.isLiked ? this._removeLike(this) : this._addLike(this);
     });
 
     // Слушатель для удаления
-    trash.addEventListener("click", () => {
-      this._handleRemoveCard(this._element);
+    this.trashEl.addEventListener("click", () => {
+      this._handleRemoveCard(this.element);
     });
   }
 
   // Генерируем карточку
   generate() {
     // Переменные
-    this._element = this._getTemplate();
-    const title = this._element.querySelector(".card__name");
-    const image = this._element.querySelector(".card__image");
-    const likeCounter = this._element.querySelector(".card__like-count");
-    const trash = this._element.querySelector(".card__delete");
-    const cardLike = this._element.querySelector(".card__like");
+    this.element = this._getTemplate();
+    this.titleEl = this.element.querySelector(".card__name");
+    this.imageEl = this.element.querySelector(".card__image");
+    this.likeCounterEl = this.element.querySelector(".card__like-count");
+    this.trashEl = this.element.querySelector(".card__delete");
+    this.cardLikeEl = this.element.querySelector(".card__like");
 
     // Подставить данные в карточку
-    title.textContent = this._title;
-    image.src = this._image;
-    image.alt = this._title;
-    likeCounter.textContent = this._likes.length;
+    this.titleEl.textContent = this._title;
+    this.imageEl.src = this._image;
+    this.imageEl.alt = this._title;
+    this.likeCounterEl.textContent = this._likes.length;
 
     // Проверить своя ли карточка и убрать корзину если нет
     if (!this._isOwner) {
-      trash.classList.add("card__delete_disabled");
+      this.trashEl.classList.add("card__delete_disabled");
     }
 
     // Проверить поставлен ли лайк карточке
-    if (this._isLiked) {
-      cardLike.classList.add("card__like_active");
+    if (this.isLiked) {
+      this.cardLikeEl.classList.add("card__like_active");
     }
 
     // Добавить слушатели
     this._setEventListeners();
 
     // Возвращаем карточку
-    return this._element;
+    return this.element;
   }
 }
