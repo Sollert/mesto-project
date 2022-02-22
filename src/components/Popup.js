@@ -5,9 +5,9 @@ export default class Popup {
 
   // ОТКРЫТЬ ПОПАП
   openPopup() {
-    document.addEventListener("keydown", this._handleEscPopupClose);
     this._popup.classList.add("popup_opened");
     this._popup.classList.remove("popup-smooth-closing"); // Убираем класс, чтобы анимация плавности срабатывала только после открытия попапа
+    document.addEventListener("keydown", this._handleEscPopupClose);
   }
 
   // ЗАКРЫТЬ ПОПАП
@@ -18,8 +18,8 @@ export default class Popup {
   }
 
   // ЗАКРЫТЬ ПОПАП ИЗОБРАЖЕНИЯ
-  _handleEscPopupClose(evt) {
-    if (evt.key === "Escape" && this._popup.classList.contains("popup_opened")) {
+  _handleEscPopupClose = (evt) => {
+    if (evt.key === "Escape") {
       this.closePopup();
     }
   }
