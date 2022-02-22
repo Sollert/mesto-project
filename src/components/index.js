@@ -17,31 +17,28 @@ const api = new Api(configApi);
 
 // СОБЫТИЯ ДЛЯ КАРТОЧКИ
 // Открыть попап с изображением
-const handleCardClick = (link, desription) => {
-  popupWithImg.openPopup(link, desription);
+const handleCardClick = (link, description) => {
+  popupWithImg.openPopup(link, description);
 };
 
 // Удалить карточку
 const handleRemoveCard = () => {};
 
 // Лайк
-
 const toggleLike = (card, data) => {
-  const cardLike = card.querySelector(".card__like");
-  const likeCounter = card.querySelector(".card__like-count");
-  cardLike.classList.toggle("card__like_active");
-  likeCounter.textContent = data.likes.length;
+  card.cardLikeEl.classList.toggle("card__like_active");
+  card.likeCounterEl.textContent = data.likes.length;
   card.isLiked = !card.isLiked;
 };
-const addLike = (card, cardId) => {
-  api.addLikeCard(cardId).then((data) => {
+const addLike = (card) => {
+  api.addLikeCard(card.id).then((data) => {
     toggleLike(card, data);
   });
 };
 
 // Дизлайк
-const removeLike = (card, cardId) => {
-  api.removeLikeCard(cardId).then((data) => {
+const removeLike = (card) => {
+  api.removeLikeCard(card.id).then((data) => {
     toggleLike(card, data);
   });
 };
@@ -57,8 +54,7 @@ const renderCard = (data) => {
   const isOwner = checkIsOwner(data);
   const isLiked = checkIsLiked(data.likes);
   const card = new Card(data, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked);
-  const cardElement = card.generate();
-  cardList.setItem(cardElement);
+  cardList.setItem(card.generate());
 };
 
 // ПРОВЕРИТЬ ВЛАДЕЛЬЦА КАРТОЧКИ
@@ -154,7 +150,7 @@ loadAllInfo();
 // setListeners();
 
 //Валидация
-const enableVlidation = () => {
+const enableValidation = () => {
   const validation = new FormValidation({ obj: configValidation }, popups);
 
   popups.forEach((elem) => {
@@ -162,7 +158,7 @@ const enableVlidation = () => {
   });
 };
 
-enableVlidation();
+enableValidation();
 
 //Popup With Image
 const popupWithImg = new PopupWithImage("#card-popup", ".popup__image", ".popup__description");
