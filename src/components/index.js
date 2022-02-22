@@ -22,7 +22,11 @@ const handleCardClick = (link, description) => {
 };
 
 // Удалить карточку
-const handleRemoveCard = () => {};
+const handleRemoveCard = (card) => {
+  api.deleteCard(card.id).then((data) => {
+    console.log(data);
+  });
+};
 
 // Лайк
 const toggleLike = (card, data) => {
@@ -30,6 +34,7 @@ const toggleLike = (card, data) => {
   card.likeCounterEl.textContent = data.likes.length;
   card.isLiked = !card.isLiked;
 };
+
 const addLike = (card) => {
   api.addLikeCard(card.id).then((data) => {
     toggleLike(card, data);
