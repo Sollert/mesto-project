@@ -167,7 +167,7 @@ popupWithImg.setEventListeners();
 //Popup with avatar
 
 const handlePopupWithAvatar = (object) => {
-  popupWithAvatar.button.textContent = "Сохранение...";
+  editAvatarSaveButton.textContent = "Сохранение...";
   api
     .updateAvatar(object.avatarLink)
     .then((res) => {
@@ -178,7 +178,7 @@ const handlePopupWithAvatar = (object) => {
       console.log(`Ошибка: ${err}`);
     })
     .finally(() => {
-      popupWithAvatar.button.textContent = "Сохранить";
+      editAvatarSaveButton.textContent = "Сохранить";
     });
 };
 
@@ -187,7 +187,7 @@ popupWithAvatar.setEventListeners();
 
 //Popup Edit Profile
 const handlePopupWithProfile = (object) => {
-  popupEditProfile.button.textContent = "Сохранение...";
+  buttonOpenPopupEditProfile.textContent = "Сохранение...";
   api.updateUserInfo(object.username, object.userstatus)
       .then((res) => {
         userName.textContent = res.name;
@@ -198,7 +198,7 @@ const handlePopupWithProfile = (object) => {
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        popupEditProfile.button.textContent = "Сохранить";
+        buttonOpenPopupEditProfile.textContent = "Сохранить";
       });
 }
 const popupEditProfile = new PopupWithForm('#popup-edit-profile', handlePopupWithProfile);
@@ -214,10 +214,9 @@ buttonOpenAvatarPopup.addEventListener("click", () => {
    popupEditProfile.openPopup();
    putUserInfo();
   });
+
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
   const putUserInfo = () => {
     userNameInput.value = userInfo.getUserInfo().userName;
     userStatusInput.value = userInfo.getUserInfo().userStatus;
-    popupEditProfile.button.removeAttribute('disabled');
-    popupEditProfile.button.classList.remove('form__save-button_disabled');
 }
