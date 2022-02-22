@@ -230,14 +230,15 @@ const putUserInfo = () => {
 const handlePopupAddCard = (object) => {
   addCardSaveButton.textContent = "Сохранение...";
   api
-    .loadCard(object.name, object.link)
+    .loadCard(object.cardname, object.cardlink)
     .then((res) => {
-      const newCard = new Card(res, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked);
+      const newCard = new Card(res, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, true, false);
       newCard.generate();
       popupAddCardForm.closePopup();
     })
     .catch((err) => {
       console.log(`Ошибка: ${err}`);
+      console.log(object.link)
     })
     .finally(() => {
       addCardSaveButton.textContent = "Сохранить";
