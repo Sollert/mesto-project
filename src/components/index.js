@@ -104,7 +104,7 @@ popupWithImg.setEventListeners();
 //Popup with avatar
 
 const handlePopupWithAvatar = (object) => {
-  editAvatarSaveButton.textContent = "Сохранение...";
+  loadingSaveButton(editAvatarSaveButton)
   api
     .updateAvatar(object.avatarLink)
     .then((res) => {
@@ -122,9 +122,13 @@ const handlePopupWithAvatar = (object) => {
 const popupWithAvatar = new PopupWithForm("#avatar-popup", handlePopupWithAvatar);
 popupWithAvatar.setEventListeners();
 
+const loadingSaveButton = (button) => {
+  button.textContent = 'Сохранение...'
+}
+
 //Popup Edit Profile
 const handlePopupWithProfile = (object) => {
-  editProfileSaveButton.textContent = "Сохранение...";
+  loadingSaveButton(editProfileSaveButton)
   api
     .updateUserInfo(object.username, object.userstatus)
     .then((res) => {
@@ -165,7 +169,7 @@ const putUserInfo = () => {
 // ПОПАП С ДОБАВЛЕНИЕМ КАРТОЧКИ
 
 const handlePopupAddCard = (object) => {
-  addCardSaveButton.textContent = "Сохранение...";
+  loadingSaveButton(addCardSaveButton)
   api
     .loadCard(object.cardname, object.cardlink)
     .then((res) => {
