@@ -23,9 +23,7 @@ const handleCardClick = (link, description) => {
 
 // Удалить карточку
 const handleRemoveCard = (card) => {
-  api.deleteCard(card.id).then((data) => {
-    console.log(data);
-  });
+  api.deleteCard(card.id)
 };
 
 // Лайк
@@ -172,7 +170,7 @@ const handlePopupAddCard = (object) => {
     .loadCard(object.cardname, object.cardlink)
     .then((res) => {
       const newCard = new Card(res, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, true, false);
-      newCard.generate();
+      cardList.setItem(newCard.generate())
       popupAddCardForm.closePopup();
     })
     .catch((err) => {
