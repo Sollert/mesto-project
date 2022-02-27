@@ -174,12 +174,14 @@ popupEditProfile.setEventListeners();
 // ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
 buttonOpenAvatarPopup.addEventListener("click", () => {
   popupWithAvatar.openPopup();
+  editAvatarValidation.resetValidation()
 });
 
 // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
 buttonOpenPopupEditProfile.addEventListener("click", () => {
   popupEditProfile.openPopup();
   putUserInfo();
+  editProfileValidation.resetValidation();
 });
 
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
@@ -216,4 +218,5 @@ popupAddCardForm.setEventListeners();
 
 buttonOpenPopupAddCard.addEventListener("click", () => {
   popupAddCardForm.openPopup();
+  addCardValidation.resetValidation();
 });

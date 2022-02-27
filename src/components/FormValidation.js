@@ -78,4 +78,15 @@ export default class FormValidation {
   enableValidation() {
       this._setEventListeners(this._formElement, this._configValidation);
   }
+  
+  resetValidation() {
+    this._toggleButtonState();
+    
+    this._inputList.forEach((inputElement) => {
+      const errorElement = this._formElement.querySelector(`#error-${inputElement.id}`);
+      this._hideInputError(inputElement, errorElement);
+    });
+    
+  }
 }
+
