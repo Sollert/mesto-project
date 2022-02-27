@@ -23,7 +23,14 @@ const handleCardClick = (link, description) => {
 
 // Удалить карточку
 const handleRemoveCard = (card) => {
-  api.deleteCard(card.id)
+  api
+    .deleteCard(card.id)
+    .then(() => {
+      card.trashEl.closest(".card").remove();
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    });
 };
 
 // Лайк
@@ -104,7 +111,7 @@ popupWithImg.setEventListeners();
 //Popup with avatar
 
 const handlePopupWithAvatar = (object) => {
-  loadingSaveButton(editAvatarSaveButton)
+  loadingSaveButton(editAvatarSaveButton);
   api
     .updateAvatar(object.avatarLink)
     .then((res) => {
@@ -123,12 +130,12 @@ const popupWithAvatar = new PopupWithForm("#avatar-popup", handlePopupWithAvatar
 popupWithAvatar.setEventListeners();
 
 const loadingSaveButton = (button) => {
-  button.textContent = 'Сохранение...'
-}
+  button.textContent = "Сохранение...";
+};
 
 //Popup Edit Profile
 const handlePopupWithProfile = (object) => {
-  loadingSaveButton(editProfileSaveButton)
+  loadingSaveButton(editProfileSaveButton);
   api
     .updateUserInfo(object.username, object.userstatus)
     .then((res) => {
@@ -169,17 +176,17 @@ const putUserInfo = () => {
 // ПОПАП С ДОБАВЛЕНИЕМ КАРТОЧКИ
 
 const handlePopupAddCard = (object) => {
-  loadingSaveButton(addCardSaveButton)
+  loadingSaveButton(addCardSaveButton);
   api
     .loadCard(object.cardname, object.cardlink)
     .then((res) => {
       const newCard = new Card(res, cardTemplate, handleCardClick, handleRemoveCard, addLike, removeLike, true, false);
-      cardList.setItem(newCard.generate())
+      cardList.setItem(newCard.generate());
       popupAddCardForm.closePopup();
     })
     .catch((err) => {
       console.log(`Ошибка: ${err}`);
-      console.log(object.link)
+      console.log(object.link);
     })
     .finally(() => {
       addCardSaveButton.textContent = "Сохранить";

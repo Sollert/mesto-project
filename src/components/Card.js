@@ -34,7 +34,7 @@ export default class Card {
     // Слушатель для удаления
     this.trashEl.addEventListener("click", () => {
       this._handleRemoveCard(this);
-      this.trashEl.closest('.card').remove()
+      //this.trashEl.closest('.card').remove()
     });
   }
 
