@@ -1,16 +1,16 @@
 // ИМПОРТ INDEX.CSS
-import "../pages/index.css";
+import "./index.css";
 // ИМПОРТЫ КЛАССОВ
-import Api from "./Api.js";
-import Card from "./Card.js";
-import Popup from "./Popup.js";
-import PopupWithForm from "./PopupWithForm.js";
-import PopupWithImage from "./PopupWithImage.js";
-import Section from "./Section.js";
-import UserInfo from "./UserInfo.js";
-import FormValidation from "./FormValidation.js";
+import Api from "../components/Api.js";
+import Card from "../components/Card.js";
+import Popup from "../components/Popup.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
+import FormValidation from "../components/FormValidation.js";
 // ИМПОРТ CONSTANTS.JS
-import { editProfileSaveButton, userNameInput, userStatusInput, userName, userStatus, buttonOpenPopupEditProfile, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "./constants.js";
+import { editProfileSaveButton, userNameInput, userStatusInput, userName, userStatus, buttonOpenPopupEditProfile, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "../utils/constants.js";
 
 // ОБЪЯВИТЬ ЭКЗЕМПЛЯР АПИ ДЛЯ ВСЕГО
 const api = new Api(configApi);
