@@ -100,17 +100,21 @@ const loadAllInfo = () => {
 };
 loadAllInfo();
 
-//Валидация редактирвоания профиля
-const editProfileValidation = new FormValidation({ settings: configValidation }, formEditProfile);
-editProfileValidation.enableValidation();
+const formValidators = {}
 
-// Валидация редактирования автара
-const editAvatarValidation = new FormValidation({ settings: configValidation }, editAvatarForm);
-editAvatarValidation.enableValidation();
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidation({settings: config}, formElement)
+    const formName = formElement.getAttribute('name')
 
-// Валидация добавление карточки
-const addCardValidation = new FormValidation({ settings: configValidation }, addCardForm);
-addCardValidation.enableValidation();
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(configValidation);
 
 //Popup With Image
 const popupWithImg = new PopupWithImage("#card-popup", ".popup__image", ".popup__description");
@@ -160,14 +164,14 @@ popupEditProfile.setEventListeners();
 // ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
 buttonOpenAvatarPopup.addEventListener("click", () => {
   popupWithAvatar.openPopup();
-  editAvatarValidation.resetValidation();
+  formValidators['add-avatar'].resetValidation();
 });
 
 // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
 buttonOpenPopupEditProfile.addEventListener("click", () => {
   popupEditProfile.openPopup();
   putUserInfo();
-  editProfileValidation.resetValidation();
+  formValidators['edit-profile'].resetValidation();
 });
 
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
@@ -204,5 +208,5 @@ popupAddCardForm.setEventListeners();
 
 buttonOpenPopupAddCard.addEventListener("click", () => {
   popupAddCardForm.openPopup();
-  addCardValidation.resetValidation();
+  formValidators['add-card'].resetValidation();
 });
