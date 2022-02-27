@@ -53,6 +53,9 @@ const handleRemoveCard = (card) => {
 const addLike = (card) => {
   api.addLikeCard(card.id).then((data) => {
     card.toggleLike(data);
+  })
+    .catch((err) => {
+    console.log(`Ошибка: ${err}`);
   });
 };
 
@@ -60,7 +63,10 @@ const addLike = (card) => {
 const removeLike = (card) => {
   api.removeLikeCard(card.id).then((data) => {
     card.toggleLike(data);
-  });
+  })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    });
 };
 
 // ЭКЗЕМПЛЯР ЮЗЕРИНФО
