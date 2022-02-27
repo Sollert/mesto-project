@@ -111,15 +111,15 @@ const loadAllInfo = () => {
 loadAllInfo();
 
 //Валидация редактирвоания профиля
-const editProfileValidation = new FormValidation({ obj: configValidation }, formEditProfile);
+const editProfileValidation = new FormValidation({ settings: configValidation }, formEditProfile);
 editProfileValidation.enableValidation()
 
 // Валидация редактирования автара
-const editAvatarValidation = new FormValidation({ obj: configValidation }, editAvatarForm);
+const editAvatarValidation = new FormValidation({ settings: configValidation }, editAvatarForm);
 editAvatarValidation.enableValidation()
 
 // Валидация добавление карточки
-const addCardValidation = new FormValidation({ obj: configValidation }, addCardForm);
+const addCardValidation = new FormValidation({ settings: configValidation }, addCardForm);
 addCardValidation.enableValidation()
 
 //Popup With Image

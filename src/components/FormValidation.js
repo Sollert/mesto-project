@@ -1,7 +1,9 @@
 export default class FormValidation {
-  constructor({ obj }, formElement) {
+  constructor({ settings }, formElement) {
     this._formElement = formElement;
-    this._configValidation = obj;
+    this._configValidation = settings;
+    this._buttonElement = this._formElement.querySelector(this._configValidation.buttonSelector);
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._configValidation.inputSelector));
   }
 
   // ПОКАЗАТЬ ОШИБКИ
@@ -36,31 +38,28 @@ export default class FormValidation {
   }
 
   // СДЕЛАТЬ КНОПКУ НЕАКТИВНОЙ
-  _disableButton(buttonDisabledClass) {
-    this._buttonElement.classList.add(buttonDisabledClass);
+  _disableButton() {
+    this._buttonElement.classList.add(this._configValidation.buttonDisabledClass);
     this._buttonElement.disabled = true;
   }
 
   // СДЕЛАТЬ КНОПКУ АКТИВНОЙ
-  _enableButton(buttonDisabledClass) {
-    this._buttonElement.classList.remove(buttonDisabledClass);
+  _enableButton() {
+    this._buttonElement.classList.remove(this._configValidation.buttonDisabledClass);
     this._buttonElement.disabled = false;
   }
 
   // МЕНЯТЬ АКТИВНОСТЬ КНОПКИ
   _toggleButtonState() {
-    this._buttonElement = this._formElement.querySelector(this._configValidation.buttonSelector);
-
-    if (this._hasInvalidInput(this._inputList)) {
-      this._disableButton(this._configValidation.buttonDisabledClass);
+    if (this._hasInvalidInput()) {
+      this._disableButton();
     } else {
-      this._enableButton(this._configValidation.buttonDisabledClass);
+      this._enableButton();
     }
   }
 
   // ДОБАВИТЬ СЛУШАТЕЛИ
   _setEventListeners() {
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._configValidation.inputSelector));
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
