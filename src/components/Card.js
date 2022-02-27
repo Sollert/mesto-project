@@ -13,6 +13,13 @@ export default class Card {
     this.isLiked = isLiked;
   }
 
+  toggleLike(data) {
+    this._likes = data.likes
+    this.cardLikeEl.classList.toggle("card__like_active");
+    this.likeCounterEl.textContent = this._likes.length;
+    this.isLiked = !this.isLiked;
+  };
+
   // Получаем разметку
   _getTemplate() {
     const cardElement = this._cardtemplate.content.querySelector(".card").cloneNode(true);

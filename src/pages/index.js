@@ -50,23 +50,16 @@ const handleRemoveCard = (card) => {
     });
 };
 
-// Лайк
-const toggleLike = (card, data) => {
-  card.cardLikeEl.classList.toggle("card__like_active");
-  card.likeCounterEl.textContent = data.likes.length;
-  card.isLiked = !card.isLiked;
-};
-
 const addLike = (card) => {
   api.addLikeCard(card.id).then((data) => {
-    toggleLike(card, data);
+    card.toggleLike(data);
   });
 };
 
 // Дизлайк
 const removeLike = (card) => {
   api.removeLikeCard(card.id).then((data) => {
-    toggleLike(card, data);
+    card.toggleLike(data);
   });
 };
 
