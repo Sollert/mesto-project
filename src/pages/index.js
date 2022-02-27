@@ -133,7 +133,7 @@ const handlePopupWithAvatar = (object) => {
   api
     .updateAvatar(object.avatarLink)
     .then((res) => {
-      userAvatar.src = res.avatar;
+      userInfo.setUserInfo(res);
       popupWithAvatar.closePopup();
     })
     .catch((err) => {
