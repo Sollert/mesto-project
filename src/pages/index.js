@@ -92,9 +92,7 @@ const loadAllInfo = () => {
       userInfo.id = user._id;
       userInfo.setUserInfo(user);
       cardsList.reverse();
-      cardsList.forEach((card) => {
-        renderCard(card);
-      });
+      cardList.renderItems(cardsList)
     })
     .catch((err) => {
       console.log(`Ошибка: ${err}`);
