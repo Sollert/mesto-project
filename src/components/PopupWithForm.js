@@ -21,8 +21,6 @@ export default class PopupWithForm extends Popup {
 
   closePopup() {
     this._form.reset();
-    this._button.classList.add("form__save-button_disabled");
-    this._button.setAttribute("disabled", true);
     super.closePopup();
   }
 
