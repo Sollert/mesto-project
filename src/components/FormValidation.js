@@ -5,80 +5,78 @@ export default class FormValidation {
   }
 
   // ПОКАЗАТЬ ОШИБКИ
-  _showInputError(inputElement, errorElement, errorMessage, settings) {
-    inputElement.classList.add(settings.inputInvalidClass);
-    errorElement.classList.add(settings.errorClass);
+  _showInputError(inputElement, errorElement, errorMessage) {
+    inputElement.classList.add(this._configValidation.inputInvalidClass);
+    errorElement.classList.add(this._configValidation.errorClass);
     errorElement.textContent = errorMessage;
   }
 
   // СКРЫТЬ ОШИБКИ
-  _hideInputError(inputElement, errorElement, settings) {
-    inputElement.classList.remove(settings.inputInvalidClass);
-    errorElement.classList.remove(settings.errorClass);
+  _hideInputError(inputElement, errorElement) {
+    inputElement.classList.remove(this._configValidation.inputInvalidClass);
+    errorElement.classList.remove(this._configValidation.errorClass);
     errorElement.textContent = "";
   }
 
   // ВАЛИДАЦИЯ
-  _checkInputValidity(formElement, inputElement, settings) {
-    const errorElement = formElement.querySelector(`#error-${inputElement.id}`);
+  _checkInputValidity(inputElement) {
+    const errorElement = this._formElement.querySelector(`#error-${inputElement.id}`);
     if (inputElement.validity.valid) {
-      this._hideInputError(inputElement, errorElement, settings);
+      this._hideInputError(inputElement, errorElement, this._configValidation);
     } else {
-      this._showInputError(inputElement, errorElement, inputElement.validationMessage, settings);
+      this._showInputError(inputElement, errorElement, inputElement.validationMessage, this._configValidation);
     }
   }
 
   // ПРОВЕРИТЬ ЕСТЬ ЛИ НЕПРАВИЛЬНО ЗАПОЛНЕННЫЕ ИНПУТЫ
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
   // СДЕЛАТЬ КНОПКУ НЕАКТИВНОЙ
-  _disableButton(buttonElement, buttonDisabledClass) {
-    buttonElement.classList.add(buttonDisabledClass);
-    buttonElement.disabled = true;
+  _disableButton(buttonDisabledClass) {
+    this._buttonElement.classList.add(buttonDisabledClass);
+    this._buttonElement.disabled = true;
   }
 
   // СДЕЛАТЬ КНОПКУ АКТИВНОЙ
-  _enableButton(buttonElement, buttonDisabledClass) {
-    buttonElement.classList.remove(buttonDisabledClass);
-    buttonElement.disabled = false;
+  _enableButton(buttonDisabledClass) {
+    this._buttonElement.classList.remove(buttonDisabledClass);
+    this._buttonElement.disabled = false;
   }
 
   // МЕНЯТЬ АКТИВНОСТЬ КНОПКИ
-  _toggleButtonState(formElement, inputList, settings) {
-    const buttonElement = formElement.querySelector(settings.buttonSelector);
+  _toggleButtonState() {
+    this._buttonElement = this._formElement.querySelector(this._configValidation.buttonSelector);
 
-    if (this._hasInvalidInput(inputList)) {
-      this._disableButton(buttonElement, settings.buttonDisabledClass);
+    if (this._hasInvalidInput(this._inputList)) {
+      this._disableButton(this._configValidation.buttonDisabledClass);
     } else {
-      this._enableButton(buttonElement, settings.buttonDisabledClass);
+      this._enableButton(this._configValidation.buttonDisabledClass);
     }
   }
 
   // ДОБАВИТЬ СЛУШАТЕЛИ
-  _setEventListeners(formElement, settings) {
-    const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
-    inputList.forEach((inputElement) => {
+  _setEventListeners() {
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._configValidation.inputSelector));
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-        this._checkInputValidity(formElement, inputElement, settings);
-        this._toggleButtonState(formElement, inputList, settings);
+        this._checkInputValidity(inputElement);
+        this._toggleButtonState();
       });
     });
 
-    this._toggleButtonState(formElement, inputList, settings);
+    this._toggleButtonState();
+
+    this._formElement.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+    });
   }
 
   // РАЗРЕШИТЬ ВАЛИДАЦИЮ
-  enableValidation(settings) {
-    Array.from(document.querySelectorAll(settings.formSelector)).forEach((formElement) => {
-      this._setEventListeners(formElement, settings);
-
-      formElement.addEventListener("submit", (evt) => {
-        evt.preventDefault();
-      });
-    });
+  enableValidation() {
+      this._setEventListeners(this._formElement, this._configValidation);
   }
 }

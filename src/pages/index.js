@@ -10,7 +10,24 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import FormValidation from "../components/FormValidation.js";
 // ИМПОРТ CONSTANTS.JS
-import { editProfileSaveButton, userNameInput, userStatusInput, userName, userStatus, buttonOpenPopupEditProfile, buttonOpenPopupAddCard, userAvatar, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, popups, configApi, configValidation, cardTemplate } from "../utils/constants.js";
+import {
+  editProfileSaveButton,
+  userNameInput,
+  userStatusInput,
+  userName,
+  userStatus,
+  buttonOpenPopupEditProfile,
+  buttonOpenPopupAddCard,
+  userAvatar,
+  buttonOpenAvatarPopup,
+  addCardSaveButton,
+  editAvatarSaveButton,
+  popups,
+  configApi,
+  configValidation,
+  cardTemplate,
+  formEditProfile, editAvatarForm, addCardForm
+} from "../utils/constants.js";
 
 // ОБЪЯВИТЬ ЭКЗЕМПЛЯР АПИ ДЛЯ ВСЕГО
 const api = new Api(configApi);
@@ -93,16 +110,17 @@ const loadAllInfo = () => {
 };
 loadAllInfo();
 
-//Валидация
-const enableValidation = () => {
-  const validation = new FormValidation({ obj: configValidation }, popups);
+//Валидация редактирвоания профиля
+const editProfileValidation = new FormValidation({ obj: configValidation }, formEditProfile);
+editProfileValidation.enableValidation()
 
-  popups.forEach((elem) => {
-    validation.enableValidation(configValidation);
-  });
-};
+// Валидация редактирования автара
+const editAvatarValidation = new FormValidation({ obj: configValidation }, editAvatarForm);
+editAvatarValidation.enableValidation()
 
-enableValidation();
+// Валидация добавление карточки
+const addCardValidation = new FormValidation({ obj: configValidation }, addCardForm);
+addCardValidation.enableValidation()
 
 //Popup With Image
 const popupWithImg = new PopupWithImage("#card-popup", ".popup__image", ".popup__description");
