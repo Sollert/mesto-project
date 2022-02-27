@@ -129,7 +129,7 @@ popupWithImg.setEventListeners();
 //Popup with avatar
 
 const handlePopupWithAvatar = (object) => {
-  loadingSaveButton(editAvatarSaveButton);
+  popupWithAvatar.loadingSaveButton(true);
   api
     .updateAvatar(object.avatarLink)
     .then((res) => {
@@ -140,20 +140,16 @@ const handlePopupWithAvatar = (object) => {
       console.log(`Ошибка: ${err}`);
     })
     .finally(() => {
-      editAvatarSaveButton.textContent = "Сохранить";
+      popupWithAvatar.loadingSaveButton(false);
     });
 };
 
 const popupWithAvatar = new PopupWithForm("#avatar-popup", handlePopupWithAvatar);
 popupWithAvatar.setEventListeners();
 
-const loadingSaveButton = (button) => {
-  button.textContent = "Сохранение...";
-};
-
 //Popup Edit Profile
 const handlePopupWithProfile = (object) => {
-  loadingSaveButton(editProfileSaveButton);
+  popupEditProfile.loadingSaveButton(true);
   api
     .updateUserInfo(object.username, object.userstatus)
     .then((res) => {
@@ -165,7 +161,7 @@ const handlePopupWithProfile = (object) => {
       console.log(`Ошибка: ${err}`);
     })
     .finally(() => {
-      editProfileSaveButton.textContent = "Сохранить";
+      popupEditProfile.loadingSaveButton(false);
     });
 };
 const popupEditProfile = new PopupWithForm("#popup-edit-profile", handlePopupWithProfile);
@@ -196,7 +192,7 @@ const putUserInfo = () => {
 // ПОПАП С ДОБАВЛЕНИЕМ КАРТОЧКИ
 
 const handlePopupAddCard = (object) => {
-  loadingSaveButton(addCardSaveButton);
+  popupAddCardForm.loadingSaveButton(true);
   api
     .loadCard(object.cardname, object.cardlink)
     .then((res) => {
@@ -209,7 +205,7 @@ const handlePopupAddCard = (object) => {
       console.log(object.link);
     })
     .finally(() => {
-      addCardSaveButton.textContent = "Сохранить";
+      popupAddCardForm.loadingSaveButton(false);
     });
 };
 

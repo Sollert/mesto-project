@@ -33,4 +33,12 @@ export default class PopupWithForm extends Popup {
 
     super.setEventListeners();
   }
+
+  loadingSaveButton = (isLoading) => {
+    if (isLoading) {
+      this._button.textContent = "Сохранение...";
+    } else {
+      this._button.textContent = "Сохранить";
+    }
+  };
 }
