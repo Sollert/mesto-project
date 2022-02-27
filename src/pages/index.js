@@ -92,7 +92,7 @@ const loadAllInfo = () => {
       userInfo.id = user._id;
       userInfo.setUserInfo(user);
       cardsList.reverse();
-      cardList.renderItems(cardsList)
+      cardList.renderItems(cardsList);
     })
     .catch((err) => {
       console.log(`Ошибка: ${err}`);
@@ -100,14 +100,14 @@ const loadAllInfo = () => {
 };
 loadAllInfo();
 
-const formValidators = {}
+const formValidators = {};
 
 // Включение валидации
 const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
-    const validator = new FormValidation({settings: config}, formElement)
-    const formName = formElement.getAttribute('name')
+    const validator = new FormValidation({ settings: config }, formElement);
+    const formName = formElement.getAttribute("name");
 
     formValidators[formName] = validator;
     validator.enableValidation();
@@ -164,23 +164,21 @@ popupEditProfile.setEventListeners();
 // ОТКРЫТЬ ПОПАП РЕДАКТИРОВАНИЯ АВАТАРА
 buttonOpenAvatarPopup.addEventListener("click", () => {
   popupWithAvatar.openPopup();
-  formValidators['add-avatar'].resetValidation();
+  formValidators["add-avatar"].resetValidation();
 });
 
 // ОТКРЫТЬ ПОПАП ПРОФИЛЯ
 buttonOpenPopupEditProfile.addEventListener("click", () => {
   popupEditProfile.openPopup();
   putUserInfo();
-  formValidators['edit-profile'].resetValidation();
+  formValidators["edit-profile"].resetValidation();
 });
 
 // ПОДСТАВЛЯТЬ В VALUE ФОРМЫ ЮЗЕРА АКТУАЛЬНЫЕ ДАННЫЕ
 const putUserInfo = () => {
-  userNameInput.value = userInfo.getUserInfo().userName;
-  userStatusInput.value = userInfo.getUserInfo().userStatus;
-
-  editProfileSaveButton.removeAttribute("disabled");
-  editProfileSaveButton.classList.remove("form__save-button_disabled");
+  const info = userInfo.getUserInfo();
+  userNameInput.value = info.userName;
+  userStatusInput.value = info.userStatus;
 };
 
 // ПОПАП С ДОБАВЛЕНИЕМ КАРТОЧКИ
@@ -208,5 +206,5 @@ popupAddCardForm.setEventListeners();
 
 buttonOpenPopupAddCard.addEventListener("click", () => {
   popupAddCardForm.openPopup();
-  formValidators['add-card'].resetValidation();
+  formValidators["add-card"].resetValidation();
 });
