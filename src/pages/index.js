@@ -10,7 +10,7 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import FormValidation from "../components/FormValidation.js";
 // ИМПОРТ CONSTANTS.JS
-import { editProfileSaveButton, userNameInput, userStatusInput, userName, userStatus, buttonOpenPopupEditProfile, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, userAvatar, avatarPopup, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, editAvatarForm, avatarLinkInput, popups, configApi, configValidation, templateSelector } from "../utils/constants.js";
+import { editProfileSaveButton, userNameInput, userStatusInput, userName, userStatus, buttonOpenPopupEditProfile, buttonOpenPopupAddCard, userAvatar, buttonOpenAvatarPopup, addCardSaveButton, editAvatarSaveButton, popups, configApi, configValidation, cardTemplate } from "../utils/constants.js";
 
 // ОБЪЯВИТЬ ЭКЗЕМПЛЯР АПИ ДЛЯ ВСЕГО
 const api = new Api(configApi);
@@ -56,7 +56,7 @@ const cardList = new Section((data) => renderCard(data), ".cards");
 const renderCard = (data) => {
   const isOwner = checkIsOwner(data);
   const isLiked = checkIsLiked(data.likes);
-  const card = new Card(data, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked);
+  const card = new Card(data, cardTemplate, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked);
   cardList.setItem(card.generate());
 };
 
@@ -173,7 +173,7 @@ const handlePopupAddCard = (object) => {
   api
     .loadCard(object.cardname, object.cardlink)
     .then((res) => {
-      const newCard = new Card(res, templateSelector, handleCardClick, handleRemoveCard, addLike, removeLike, true, false);
+      const newCard = new Card(res, cardTemplate, handleCardClick, handleRemoveCard, addLike, removeLike, true, false);
       cardList.setItem(newCard.generate())
       popupAddCardForm.closePopup();
     })

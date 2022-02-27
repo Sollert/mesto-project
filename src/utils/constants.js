@@ -33,7 +33,7 @@ const avatarLinkInput = avatarPopup.querySelector(".form__element");
 const editAvatarForm = avatarPopup.querySelector(".form");
 const editAvatarSaveButton = editAvatarForm.querySelector(".form__save-button");
 
-const templateSelector = document.querySelector("#card-template");
+const cardTemplate = document.querySelector("#card-template");
 
 const configApi = {
   baseUrl: `https://nomoreparties.co/v1/plus-cohort-6`,
@@ -53,4 +53,4 @@ const configValidation = {
   buttonDisabledClass: "form__save-button_disabled",
 };
 
-export { profile, popups, buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, userAvatar, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, cardNameInput, cardLinkInput, cardPopup, cardPopupImage, cardPopupDescription, addCardSaveButton, avatarPopup, buttonOpenAvatarPopup, avatarLinkInput, editAvatarForm, editAvatarSaveButton, configApi, configValidation, templateSelector };
+export { profile, popups, buttonOpenPopupEditProfile, formEditProfile, userNameInput, userStatusInput, userName, userStatus, userAvatar, editProfileSaveButton, cardsContainer, popupAddCard, buttonOpenPopupAddCard, addCardForm, cardNameInput, cardLinkInput, cardPopup, cardPopupImage, cardPopupDescription, addCardSaveButton, avatarPopup, buttonOpenAvatarPopup, avatarLinkInput, editAvatarForm, editAvatarSaveButton, configApi, configValidation, cardTemplate };

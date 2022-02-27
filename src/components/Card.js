@@ -1,10 +1,10 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked) {
+  constructor(data, cardTemplate, handleCardClick, handleRemoveCard, addLike, removeLike, isOwner, isLiked) {
     this.id = data._id;
     this._title = data.name;
     this._image = data.link;
     this._likes = data.likes;
-    this._cardSelector = cardSelector;
+    this._cardtemplate = cardTemplate;
     this._handleCardClick = handleCardClick;
     this._handleRemoveCard = handleRemoveCard;
     this._addLike = addLike;
@@ -15,7 +15,7 @@ export default class Card {
 
   // Получаем разметку
   _getTemplate() {
-    const cardElement = this._cardSelector.content.querySelector(".card").cloneNode(true);
+    const cardElement = this._cardtemplate.content.querySelector(".card").cloneNode(true);
     return cardElement;
   }
 
