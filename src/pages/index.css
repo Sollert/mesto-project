@@ -72,9 +72,6 @@
 @import url(../blocks/form/__save-button/form__save-button.css);
 @import url(../blocks/form/__save-button/_disabled/form__save-button_disabled.css);
 
-/* Блок popup-smooth-closing */
-@import url(../blocks/popup-smooth-closing/popup-smooth-closing.css);
-
 /* Блок error-message */
 @import url(../blocks/error-message/error-message.css);
 @import url(../blocks/error-message/_active/error-message_active.css);

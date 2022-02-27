@@ -1,0 +1,36 @@
+export default class Popup {
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+  }
+
+  // ОТКРЫТЬ ПОПАП
+  openPopup() {
+    this._popup.classList.add("popup_opened");
+    document.addEventListener("keydown", this._handleEscPopupClose);
+  }
+
+  // ЗАКРЫТЬ ПОПАП
+  closePopup() {
+    this._popup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", this._handleEscPopupClose);
+  }
+
+  // ЗАКРЫТЬ ПОПАП ИЗОБРАЖЕНИЯ
+  _handleEscPopupClose = (evt) => {
+    if (evt.key === "Escape") {
+      this.closePopup();
+    }
+  };
+
+  // ЗАКРЫТЬ ПОПАПЫ
+  setEventListeners() {
+    this._popup.addEventListener("mousedown", (evt) => {
+      if (evt.target.classList.contains("popup_opened")) {
+        this.closePopup();
+      }
+      if (evt.target.classList.contains("popup__close-button")) {
+        this.closePopup();
+      }
+    });
+  }
+}
