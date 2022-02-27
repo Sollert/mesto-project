@@ -147,8 +147,9 @@ const handlePopupWithProfile = (object) => {
   api
     .updateUserInfo(object.username, object.userstatus)
     .then((res) => {
-      userName.textContent = res.name;
-      userStatus.textContent = res.about;
+      // userName.textContent = res.name;
+      // userStatus.textContent = res.about;
+      userInfo.setUserInfo(res);
       popupEditProfile.closePopup();
     })
     .catch((err) => {
